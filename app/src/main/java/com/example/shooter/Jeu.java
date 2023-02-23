@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,6 +23,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private Context context;
     private Joystick joystick;
+    private int joystickPointerId = 0;
+
 
     public Jeu(Context context){
         super(context);
@@ -31,12 +34,47 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
         this.context = context;
          gameLoop = new GameLoop(this, surfaceHolder);
-        joystick = new Joystick(677, 2621, 70, 40);
+        joystick = new Joystick(550, 1800, 120, 40);
 
 
         setFocusable(true);
             }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        // Handle user input touch event actions
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (joystick.getIsPressed()) {
+                    // Joystick was pressed before this event -> cast spell
+                } else if (joystick.isPressed((double) event.getX(), (double) event.getY())) {
+                    // Joystick is pressed in this event -> setIsPressed(true) and store pointer id
+                    joystick.setIsPressed(true);
+                } else {
+                    // Joystick was not previously, and is not pressed in this event -> cast spell
+                }
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                if (joystick.getIsPressed()) {
+                    // Joystick was pressed previously and is now moved
+                    joystick.setActuator((double) event.getX(), (double) event.getY());
+                }
+                return true;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                if (joystickPointerId == event.getPointerId(event.getActionIndex())) {
+                    // joystick pointer was let go off -> setIsPressed(false) and resetActuator()
+                    joystick.setIsPressed(false);
+                    joystick.resetActuator();
+                }
+                return true;
+        }
+
+        return super.onTouchEvent(event);
+    }
 
     @Override
     public void surfaceCreated( SurfaceHolder holder) {
@@ -81,6 +119,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update(){
+
+        joystick.update();
+
 
     }
 }
