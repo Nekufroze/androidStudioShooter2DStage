@@ -12,6 +12,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import com.example.shooter.assets.Joystick;
 /*
  Sert à gérer le jeu et update le render des objets...
  */
@@ -19,6 +21,8 @@ import android.view.View;
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private Context context;
+    private Joystick joystick;
+
     public Jeu(Context context){
         super(context);
 
@@ -27,6 +31,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
         this.context = context;
          gameLoop = new GameLoop(this, surfaceHolder);
+        joystick = new Joystick(677, 2621, 70, 40);
+
 
         setFocusable(true);
             }
@@ -50,8 +56,10 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        draFPS(canvas);
+        drawFPS(canvas);
         draUPS(canvas);
+        joystick.draw(canvas);
+
     }
     
     public void draUPS(Canvas canvas){
@@ -63,7 +71,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("UPS" + averageUPS, 100, 20, paint);
     }
 
-    public void draFPS(Canvas canvas){
+    public void drawFPS(Canvas canvas){
         String averageFPS = Double.toString(gameLoop.getAverageFPS());
         Paint paint = new Paint();
         int color = ContextCompat.getColor(context, R.color.purple_700);
