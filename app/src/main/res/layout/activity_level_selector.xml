@@ -14,7 +14,11 @@
         android:columnWidth="50dp"
         android:stretchMode="columnWidth"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        >
+
     </GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

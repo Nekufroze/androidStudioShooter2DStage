@@ -6,18 +6,13 @@ import android.view.SurfaceHolder;
 public class GameLoop extends Thread {
 
     private boolean isRunning = false;
-    private SurfaceHolder surfaceHolder;
-    private Jeu jeu;
-    private double averageUPS;
+    private final SurfaceHolder surfaceHolder;
+    private final Jeu jeu;
     private double averageFPS;
     public GameLoop(Jeu jeu, SurfaceHolder surfaceHolder) {
 
         this.jeu = jeu;
         this.surfaceHolder = surfaceHolder;
-    }
-
-    public double getAverageUPS() {
-        return averageUPS;
     }
 
     public double getAverageFPS() {
@@ -32,12 +27,10 @@ public class GameLoop extends Thread {
     public void run(){
         super.run();
 
-        int updateCount = 0;
         int framecount = 0;
 
         long startTime;
         long elapsedTime;
-        long sleepTime;
 
         // Gameloop / Moteur du jeu
         Canvas canvas;
@@ -52,14 +45,11 @@ public class GameLoop extends Thread {
                 e.printStackTrace();
             }
 
-            updateCount++;
             framecount++;
-
+            // Affichage des Images Par Secondes
             elapsedTime = System.currentTimeMillis() - startTime;
             if (elapsedTime >= 1000){
-                averageUPS = updateCount /(1E-3*elapsedTime);
                 averageFPS = framecount /(1E-3*elapsedTime);
-                updateCount = 0;
                 framecount = 0;
                 startTime = System.currentTimeMillis();
             }
