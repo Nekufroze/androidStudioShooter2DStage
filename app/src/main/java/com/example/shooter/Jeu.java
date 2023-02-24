@@ -20,10 +20,9 @@ import com.example.shooter.assets.Joystick;
  */
 
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
-    private GameLoop gameLoop;
-    private Context context;
-    private Joystick joystick;
-    private int joystickPointerId = 0;
+    private final GameLoop gameLoop;
+    private final Context context;
+    private final Joystick joystick;
 
 
     public Jeu(Context context){
@@ -44,21 +43,21 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
 
         // Handle user input touch event actions
+        int joystickPointerId = 0;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (joystick.getIsPressed()) {
-                    // Joystick was pressed before this event -> cast spell
+                    // Si le joystick est pressé -> Tiré
                 } else if (joystick.isPressed((double) event.getX(), (double) event.getY())) {
                     // Joystick is pressed in this event -> setIsPressed(true) and store pointer id
                     joystick.setIsPressed(true);
                 } else {
-                    // Joystick was not previously, and is not pressed in this event -> cast spell
+
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
                 if (joystick.getIsPressed()) {
-                    // Joystick was pressed previously and is now moved
                     joystick.setActuator((double) event.getX(), (double) event.getY());
                 }
                 return true;
@@ -95,18 +94,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas){
         super.draw(canvas);
         drawFPS(canvas);
-        draUPS(canvas);
         joystick.draw(canvas);
 
-    }
-    
-    public void draUPS(Canvas canvas){
-        String averageUPS = Double.toString(gameLoop.getAverageUPS());
-        Paint paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.purple_700);
-        paint.setColor(color);
-        paint.setTextSize(50);
-        canvas.drawText("UPS" + averageUPS, 100, 20, paint);
     }
 
     public void drawFPS(Canvas canvas){
@@ -119,9 +108,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update(){
-
         joystick.update();
-
 
     }
 }

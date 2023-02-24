@@ -4,23 +4,24 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.example.shooter.R;
+
 public class Joystick {
 
-    private int outerCircleCenterPositionX;
-    private int outerCircleCenterPositionY;
+    private final int outerCircleCenterPositionX;
+    private final int outerCircleCenterPositionY;
     private int innerCircleCenterPositionX;
     private int innerCircleCenterPositionY;
 
-    private int outerCircleRadius;
-    private int innerCircleRadius;
+    private final int outerCircleRadius;
+    private final int innerCircleRadius;
 
-    private Paint innerCirclePaint;
-    private Paint outerCirclePaint;
+    private final Paint innerCirclePaint;
+    private final Paint outerCirclePaint;
     private boolean isPressed = false;
-    private double joystickCenterToTouchDistance;
     private double actuatorX;
     private double actuatorY;
-
+    // Class Joystick permettant de créer un joystick en fonction de coordonné et de rayon pour les deux cercles
     public Joystick(int centerPositionX, int centerPositionY, int outerCircleRadius, int innerCircleRadius) {
 
         // Outer and inner circle make up the joystick
@@ -29,22 +30,23 @@ public class Joystick {
         innerCircleCenterPositionX = centerPositionX;
         innerCircleCenterPositionY = centerPositionY;
 
-        // Radii of circles
+        // Rayon des cercles
         this.outerCircleRadius = outerCircleRadius;
         this.innerCircleRadius = innerCircleRadius;
 
-        // paint of circles
+        // Couleur cercle externe
         outerCirclePaint = new Paint();
-        outerCirclePaint.setColor(Color.BLUE);
+        outerCirclePaint.setColor(Color.LTGRAY);
         outerCirclePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
+        // Couleur cercle interne
         innerCirclePaint = new Paint();
-        innerCirclePaint.setColor(Color.GREEN);
+        innerCirclePaint.setColor(Color.GRAY);
         innerCirclePaint.setStyle(Paint.Style.FILL_AND_STROKE);
     }
 
     public void draw(Canvas canvas) {
-        // Draw outer circle
+        // Dessiner cercle externe
         canvas.drawCircle(
                 outerCircleCenterPositionX,
                 outerCircleCenterPositionY,
@@ -52,7 +54,7 @@ public class Joystick {
                 outerCirclePaint
         );
 
-        // Draw inner circle
+        // Dessiner cercle interne
         canvas.drawCircle(
                 innerCircleCenterPositionX,
                 innerCircleCenterPositionY,
@@ -83,9 +85,8 @@ public class Joystick {
             actuatorY = deltaY/deltaDistance;
         }
     }
-
     public boolean isPressed(double touchPositionX, double touchPositionY) {
-        joystickCenterToTouchDistance = Math.sqrt(
+        double joystickCenterToTouchDistance = Math.sqrt(
                 Math.pow(outerCircleCenterPositionX - touchPositionX, 2) +
                         Math.pow(outerCircleCenterPositionY - touchPositionY, 2)
         );
