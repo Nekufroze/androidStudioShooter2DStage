@@ -8,15 +8,10 @@ public class GameLoop extends Thread {
     private boolean isRunning = false;
     private final SurfaceHolder surfaceHolder;
     private final Jeu jeu;
-    private double averageFPS;
     public GameLoop(Jeu jeu, SurfaceHolder surfaceHolder) {
 
         this.jeu = jeu;
         this.surfaceHolder = surfaceHolder;
-    }
-
-    public double getAverageFPS() {
-        return averageFPS;
     }
 
     public void startLoop(){
@@ -43,15 +38,6 @@ public class GameLoop extends Thread {
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }catch (IllegalArgumentException e){
                 e.printStackTrace();
-            }
-
-            framecount++;
-            // Affichage des Images Par Secondes
-            elapsedTime = System.currentTimeMillis() - startTime;
-            if (elapsedTime >= 1000){
-                averageFPS = framecount /(1E-3*elapsedTime);
-                framecount = 0;
-                startTime = System.currentTimeMillis();
             }
 
         }
