@@ -10,4 +10,5 @@
     <color name="Orange">#FF6900</color>
     <color name="Light_Grey">#A96C6C6C</color>
     <color name="Grey">#2B2B2B</color>
+    <color name="joueur">#A96C6C6C</color>
 </resources>
