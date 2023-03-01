@@ -110,7 +110,7 @@ public class Joystick {
     }
 
     public void resetActuator() {
-        actuatorX = 0;
-        actuatorY = 0;
+        actuatorX = 0.0;
+        actuatorY = 0.0;
     }
 }

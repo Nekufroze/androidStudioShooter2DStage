@@ -33,9 +33,21 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
     switch (event.getAction()){
         case MotionEvent.ACTION_DOWN:
-        case MotionEvent.ACTION_MOVE:
-            joueur.setPosition((double)event.getX(),(double)event.getY());
+            if(joystick.isPressed((double)event.getX(),(double)event.getY())){
+                joystick.setIsPressed(true);
+            }
             return true;
+        case MotionEvent.ACTION_MOVE:
+            if(joystick.getIsPressed()){
+                joystick.setActuator((double)event.getX(),(double)event.getY());
+            }
+            return true;
+        case MotionEvent.ACTION_UP: {
+               joystick.setIsPressed(false);
+               joystick.resetActuator();
+               return true;
+            }
+
     }
         return super.onTouchEvent(event);
     }
@@ -66,7 +78,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         joystick.update();
-        joueur.update();
+        joueur.update(joystick);
 
     }
 }
