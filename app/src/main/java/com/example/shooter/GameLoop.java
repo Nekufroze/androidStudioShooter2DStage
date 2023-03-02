@@ -22,14 +22,9 @@ public class GameLoop extends Thread {
     public void run(){
         super.run();
 
-        int framecount = 0;
-
-        long startTime;
-        long elapsedTime;
 
         // Gameloop / Moteur du jeu
         Canvas canvas;
-        startTime = System.currentTimeMillis();
         while(isRunning){
             try{
                 canvas = surfaceHolder.lockCanvas();
