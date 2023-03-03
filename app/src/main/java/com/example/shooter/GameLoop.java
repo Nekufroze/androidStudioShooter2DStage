@@ -4,12 +4,13 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread {
+    // Nombre maximum d'update par seconde du jeu
+    public static final double MAX_UPS = 60.0;
 
     private boolean isRunning = false;
     private final SurfaceHolder surfaceHolder;
     private final Jeu jeu;
     public GameLoop(Jeu jeu, SurfaceHolder surfaceHolder) {
-
         this.jeu = jeu;
         this.surfaceHolder = surfaceHolder;
     }
@@ -21,8 +22,6 @@ public class GameLoop extends Thread {
     @Override
     public void run(){
         super.run();
-
-
         // Gameloop / Moteur du jeu
         Canvas canvas;
         while(isRunning){

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.GameLoop;
+import com.example.shooter.Jeu;
 import com.example.shooter.R;
 
 /*
@@ -12,13 +14,41 @@ C'est une classe Fille de Circle Qui est notre classe mère mais qui est aussi l
 de GameObject
  */
 public class Ennemi extends Circle {
-    private static final double SPEED_PIXELS_PER_SECOND = Joueur.SPEED_PIXELS_PER_SECOND * 0.85;
-    private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / 120;
+    private static final double SPEED_PIXELS_PER_SECOND = Joueur.SPEED_PIXELS_PER_SECOND * 0.65;
+    private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
+    private static final double SPAWNS_PER_MINUTE = Jeu.Nbennemi();
+    private static final double SPAWNS_PER_SECOND = SPAWNS_PER_MINUTE / 60;
+    private static final double UPDATES_PER_SPAWN = GameLoop.MAX_UPS/SPAWNS_PER_SECOND;
+    private static double updatesUntilNextSpawn = UPDATES_PER_SPAWN;
     private final Joueur joueur;
 
     public Ennemi(Context context, Joueur joueur, double positionX, double positionY, double radius) {
         super(context, ContextCompat.getColor(context, R.color.ennemi), positionX, positionY, radius);
         this.joueur = joueur;
+    }
+
+    public Ennemi(Context context, Joueur joueur) {
+        super(context,
+                ContextCompat.getColor(context, R.color.ennemi),
+                Math.random()*1000,
+                Math.random()*1000,
+                30
+        );
+            this.joueur = joueur;
+    }
+
+    /*
+    radyToSpawn regarde si un nouvelle ennemi dois pawn, suivant le niveau de difficulté choisis ( A IMPLEMENTER )
+    Le spawn sera réaliser par minute
+     */
+    public static boolean readyToSpawn() {
+        if (updatesUntilNextSpawn <= 0) {
+            updatesUntilNextSpawn += UPDATES_PER_SPAWN;
+            return true;
+        } else {
+            updatesUntilNextSpawn --;
+            return false;
+        }
     }
 
     @Override
@@ -37,7 +67,7 @@ public class Ennemi extends Circle {
         double directionX = distanceToJoueurX/distanceToJoueur;
         double directionY = distanceToJoueurY/distanceToJoueur;
 
-        // Mettre le joueur dans la direction du Joueur
+        // Mettre l'ennemi dans la direction du Joueur
         if(distanceToJoueur > 0){
             velocityX = directionX*MAX_SPEED;
             velocityY = directionY*MAX_SPEED;
