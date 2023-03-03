@@ -49,12 +49,12 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         case MotionEvent.ACTION_DOWN:
             // Si le joystick étais déja préssé avant Il faut donc tiré
             if(joystick.getIsPressed()){
-                ListeBalle.add(new Balle(joueur));
+                ListeBalle.add(new Balle( getContext(),joueur));
             } else if(joystick.isPressed(event.getX(), event.getY())){
                 joystick.setIsPressed(true);
             }else {
                 // Cas si le joystick n'a jamais été pressé
-                ListeBalle.add(new Balle(joueur));
+                ListeBalle.add(new Balle(getContext() ,joueur));
             }
             return true;
             // cas ou le joystick est bougé
@@ -96,6 +96,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         joueur.draw(canvas);
         for (Ennemi ennemi : ListeEnnemi){
             ennemi.draw(canvas);
+        }
+        for (Balle balle : ListeBalle){
+            balle.draw(canvas);
         }
 
     }

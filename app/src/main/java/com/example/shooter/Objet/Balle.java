@@ -4,20 +4,27 @@ import android.content.Context;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.GameLoop;
 import com.example.shooter.R;
 
 public class Balle extends Circle {
-    private  final  Joueur Tireur;
+    public static final double SPEED_PIXELS_PER_SECOND = 600.0;
+    public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
     public Balle(Context context, Joueur Tireur){
         super(context, ContextCompat.getColor(context, R.color.Balle),
-                Math.random()*1000,
-                Math.random()*1000,
-                30
+                Tireur.getPositionX(),
+                Tireur.getPositionY(),
+                10
         );
-        this.Tireur = Tireur;}
+        velocityX = Tireur.getDirectionX()*MAX_SPEED;
+        velocityY = Tireur.getDirectionY()*MAX_SPEED;
+
+    }
 
 
     @Override
     public void update() {
+    positionX += velocityX;
+    positionY += velocityY;
     }
 }

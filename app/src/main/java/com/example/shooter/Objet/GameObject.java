@@ -7,7 +7,8 @@ public abstract class GameObject {
     protected double positionY;
     protected double velocityX;
     protected double velocityY;
-
+    protected double directionX;
+    protected double directionY;
     public GameObject(double positionX, double positionY){
         this.positionX = positionX;
         this.positionY = positionY;
@@ -23,7 +24,12 @@ public abstract class GameObject {
                         Math.pow(obj2.getPositionY()- obj1.getPositionY(),2)
         );
     }
-
+    protected double getDirectionX(){
+        return directionX;
+    }
+    protected double getDirectionY(){
+        return directionY;
+    }
     public abstract void draw(Canvas canvas);
     public abstract void update();
 
@@ -33,4 +39,5 @@ public abstract class GameObject {
     public double getPositionY() {
         return positionY;
     }
+
 }

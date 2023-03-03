@@ -1,16 +1,13 @@
 package com.example.shooter.Objet;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.shooter.GameLoop;
-import com.example.shooter.Objet.Circle;
-import com.example.shooter.Objet.GameObject;
 import com.example.shooter.R;
 import com.example.shooter.assets.Joystick;
+import com.example.shooter.assets.Utils;
 
 /*
 La Classe Joueur désigne le Joueur principal, qui est controller grâce à un Joystick virtuel
@@ -36,6 +33,14 @@ public class Joueur extends Circle {
         positionX += velocityX;
         positionY += velocityY;
 
+        // Direction du joueur
+        if(velocityX !=0 || velocityY !=0){
+            // Trouvé le vecteur de X et Y afin de trouvé la direction
+            double distance = Utils.getDistanceBetweenPoints(0,0,velocityX,velocityY);
+            directionX  = velocityX/distance;
+            directionY = velocityY/distance;
+
+        }
     }
 
 }
