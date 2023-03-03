@@ -7,8 +7,8 @@ public abstract class GameObject {
     protected double positionY;
     protected double velocityX;
     protected double velocityY;
-    protected double directionX;
-    protected double directionY;
+    protected double directionX = 1;
+    protected double directionY = 1;
     public GameObject(double positionX, double positionY){
         this.positionX = positionX;
         this.positionY = positionY;

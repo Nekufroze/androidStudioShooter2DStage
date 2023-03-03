@@ -14,7 +14,7 @@ La Classe Joueur désigne le Joueur principal, qui est controller grâce à un J
 Cette classe est un héritage de la classe Circle qui est une classe Heriter de GameObject
  */
 public class Joueur extends Circle {
-    public static final double SPEED_PIXELS_PER_SECOND = 1000.0;
+    public static final double SPEED_PIXELS_PER_SECOND = 600.0;
     public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
 
     private final Joystick joystick;

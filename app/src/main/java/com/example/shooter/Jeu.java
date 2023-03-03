@@ -21,10 +21,12 @@ import java.util.List;
 
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private final GameLoop gameLoop;
+    private int joystickPointerid = 0;
     private final Joystick joystick;
     private final Joueur joueur;
     private final List<Ennemi> ListeEnnemi = new ArrayList<>();
     private final List<Balle> ListeBalle = new ArrayList<>();
+    private int BalleATirer = 0;
     public Jeu(Context context){
         super(context);
 
@@ -44,18 +46,19 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-    switch (event.getAction()){
+    switch (event.getActionMasked()){
         // Cas ou le joystick est pressé
         case MotionEvent.ACTION_DOWN:
+        case MotionEvent.ACTION_POINTER_DOWN:
             // Si le joystick étais déja préssé avant Il faut donc tiré
             if(joystick.getIsPressed()){
-                ListeBalle.add(new Balle( getContext(),joueur));
+                BalleATirer++;
             } else if(joystick.isPressed(event.getX(), event.getY())){
+                joystickPointerid = event.getPointerId(event.getActionIndex());
                 joystick.setIsPressed(true);
             }else {
                 // Cas si le joystick n'a jamais été pressé
-                ListeBalle.add(new Balle(getContext() ,joueur));
-            }
+                BalleATirer++;            }
             return true;
             // cas ou le joystick est bougé
         case MotionEvent.ACTION_MOVE:
@@ -65,9 +68,13 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             return true;
             // Cas ou le joystick n'est plus pressé
         case MotionEvent.ACTION_UP:
-               joystick.setIsPressed(false);
-               joystick.resetActuator();
-               return true;
+        case MotionEvent.ACTION_POINTER_UP:
+            if(joystickPointerid == event.getPointerId(event.getActionIndex())){
+                joystick.setIsPressed(false);
+                joystick.resetActuator();
+            }
+            return true;
+
 
 
     }
@@ -110,6 +117,10 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     if(Ennemi.readyToSpawn()){
         ListeEnnemi.add(new Ennemi(getContext(), joueur));
     }
+        while (BalleATirer > 0){
+        ListeBalle.add(new Balle(getContext(),joueur));
+            BalleATirer--;
+    }
     // Update l'état de chaque ennemi et des balles
         for (Ennemi ennemi : ListeEnnemi){
             ennemi.update();
@@ -122,8 +133,18 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         // Pour le moment l'ennemi sera supprimé lorsqu'il touche le joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
         while (iteratorEnnemi.hasNext()){
-            if (Circle.isColliding(iteratorEnnemi.next(),joueur)){
-                iteratorEnnemi.remove();
+            Circle ennemi = iteratorEnnemi.next();
+            if (Circle.isColliding(ennemi ,joueur)){
+                continue;
+            }
+            Iterator<Balle> iteratorBalle = ListeBalle.iterator();
+            while (iteratorBalle.hasNext()){
+                Circle balle = iteratorBalle.next();
+                if (Circle.isColliding(balle, ennemi)){
+                    iteratorBalle.remove();
+                    iteratorEnnemi.remove();
+                    break;
+                }
             }
         }
     }
