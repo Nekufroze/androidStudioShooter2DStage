@@ -8,4 +8,5 @@
     <string name="accueil">Accueil</string>
     <string name="start">Start</string>
     <string name="first_fragment_label">first_fragment_label</string>
+    <string name="kill">Kill</string>
 </resources>

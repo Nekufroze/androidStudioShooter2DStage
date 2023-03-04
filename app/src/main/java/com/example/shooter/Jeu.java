@@ -2,9 +2,11 @@ package com.example.shooter;
 import androidx.annotation.NonNull;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
@@ -27,20 +29,22 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private final List<Ennemi> ListeEnnemi = new ArrayList<>();
     private final List<Balle> ListeBalle = new ArrayList<>();
     private int BalleATirer = 0;
+    protected static int Nbennemi_Minute = 20;
+    protected static int Nbennemi_Spawn = 0;
+    int NbEnnemiMort = 0;
+
     public Jeu(Context context){
         super(context);
-
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-
         gameLoop = new GameLoop(this, surfaceHolder);
         joystick = new Joystick(350, 1800, 120, 40);
         joueur = new Joueur(getContext(),joystick, 500,1000,30);
         setFocusable(true);
             }
 
-    public static double Nbennemi() {
-        return 20;
+    public static int Nbennemi_Minute() {
+        return Nbennemi_Minute;
     }
 
     @Override
@@ -50,7 +54,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         // Cas ou le joystick est pressé
         case MotionEvent.ACTION_DOWN:
         case MotionEvent.ACTION_POINTER_DOWN:
-            // Si le joystick étais déja préssé avant Il faut donc tiré
+            // Si le joystick étais déja pressé avant Il faut donc tiré
             if(joystick.getIsPressed()){
                 BalleATirer++;
             } else if(joystick.isPressed(event.getX(), event.getY())){
@@ -132,15 +136,16 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         // Fonction Qui va permettre d'enlever l'ennemi si il est touché par le tir du joueur
         // Pour le moment l'ennemi sera supprimé lorsqu'il touche le joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
+        Iterator<Balle> iteratorBalle = ListeBalle.iterator();
+
         while (iteratorEnnemi.hasNext()){
             Circle ennemi = iteratorEnnemi.next();
-            if (Circle.isColliding(ennemi ,joueur)){
-                continue;
-            }
-            Iterator<Balle> iteratorBalle = ListeBalle.iterator();
             while (iteratorBalle.hasNext()){
                 Circle balle = iteratorBalle.next();
                 if (Circle.isColliding(balle, ennemi)){
+                    NbEnnemiMort++;
+                    Nbennemi_Spawn++;
+                    System.out.println(NbEnnemiMort);
                     iteratorBalle.remove();
                     iteratorEnnemi.remove();
                     break;

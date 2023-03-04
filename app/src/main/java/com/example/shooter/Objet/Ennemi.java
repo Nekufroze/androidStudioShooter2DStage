@@ -14,18 +14,13 @@ C'est une classe Fille de Circle Qui est notre classe mère mais qui est aussi l
 de GameObject
  */
 public class Ennemi extends Circle {
-    private static final double SPEED_PIXELS_PER_SECOND = Joueur.SPEED_PIXELS_PER_SECOND * 0.65;
+    private static final double SPEED_PIXELS_PER_SECOND = Joueur.SPEED_PIXELS_PER_SECOND * 0.55;
     private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
-    private static final double SPAWNS_PER_MINUTE = Jeu.Nbennemi();
+    private static final double SPAWNS_PER_MINUTE = Jeu.Nbennemi_Minute();
     private static final double SPAWNS_PER_SECOND = SPAWNS_PER_MINUTE / 60;
     private static final double UPDATES_PER_SPAWN = GameLoop.MAX_UPS/SPAWNS_PER_SECOND;
     private static double updatesUntilNextSpawn = UPDATES_PER_SPAWN;
     private final Joueur joueur;
-
-    public Ennemi(Context context, Joueur joueur, double positionX, double positionY, double radius) {
-        super(context, ContextCompat.getColor(context, R.color.ennemi), positionX, positionY, radius);
-        this.joueur = joueur;
-    }
 
     public Ennemi(Context context, Joueur joueur) {
         super(context,
