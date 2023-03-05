@@ -137,7 +137,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         // Pour le moment l'ennemi sera supprimé lorsqu'il touche le joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
         Iterator<Balle> iteratorBalle = ListeBalle.iterator();
-
         while (iteratorEnnemi.hasNext()){
             Circle ennemi = iteratorEnnemi.next();
             while (iteratorBalle.hasNext()){

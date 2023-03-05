@@ -25,8 +25,8 @@ public class Level_Selector extends AppCompatActivity {
         // Edit du nombre de colonne
         mongridview.setNumColumns(1);
 
-        for (int i=0; i<lesLVL.length; i++) {
-            adapter.add("Niveau : " + lesLVL[i]);
+        for (String s : lesLVL) {
+            adapter.add("Niveau : " + s);
         }
             //Associer l'adaptateur au gridview
             mongridview.setAdapter(adapter);
