@@ -23,7 +23,7 @@ public class Ennemi extends Circle {
     private final Joueur joueur;
 
     public Ennemi(Context context, Joueur joueur) {
-        super(context,
+        super(
                 ContextCompat.getColor(context, R.color.ennemi),
                 Math.random()*1000,
                 Math.random()*1000,
@@ -33,8 +33,8 @@ public class Ennemi extends Circle {
     }
 
     /*
-    radyToSpawn regarde si un nouvelle ennemi dois pawn, suivant le niveau de difficulté choisis ( A IMPLEMENTER )
-    Le spawn sera réaliser par minute
+    readyToSpawn regarde si un nouvel ennemi doit pawn, suivant le niveau de difficulté choisie ( A IMPLEMENTER )
+    Le spawn sera réalisé par minute
      */
     public static boolean readyToSpawn() {
         if (updatesUntilNextSpawn <= 0) {

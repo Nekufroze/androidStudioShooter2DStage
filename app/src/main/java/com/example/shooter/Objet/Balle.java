@@ -11,7 +11,7 @@ public class Balle extends Circle {
     public static final double SPEED_PIXELS_PER_SECOND = 1000.0;
     public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
     public Balle(Context context, Joueur Tireur){
-        super(context, ContextCompat.getColor(context, R.color.Balle),
+        super(ContextCompat.getColor(context, R.color.Balle),
                 Tireur.getPositionX(),
                 Tireur.getPositionY(),
                 15

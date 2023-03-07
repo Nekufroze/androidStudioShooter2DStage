@@ -1,11 +1,9 @@
 package com.example.shooter.Objet;
-
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /*
-Circle est une class mise en Abstract ne pouvant donc pas être créer (Classe Mère) elle réalise
+Circle est une class mise en Abstract ne pouvant donc pas être créer (Class Mère) elle réalise
 la création visuel des objets
  */
 public abstract class Circle extends GameObject {
@@ -13,13 +11,14 @@ public abstract class Circle extends GameObject {
     protected final double radius;
     protected final Paint paint;
 
-    public Circle(Context context, int color, double positionX, double positionY, double radius) {
+    public Circle(int color, double positionX, double positionY, double radius) {
         super(positionX, positionY);
         this.radius = radius;
         paint = new Paint();
         paint.setColor(color);
     }
-
+    // Fonction permettant de savoir si deux objets sont en collision en fonction de la distance entre les rayons des deux objets
+    // getDistanceBetweenObjects --> GameObject
     public static boolean isColliding(Circle obj1, Circle obj2) {
         double distance = getDistanceBetweenObjects(obj1,obj2);
         double distanceToCollision = obj1.getRadius() + obj2.getRadius();

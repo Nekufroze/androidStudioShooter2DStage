@@ -42,11 +42,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         joueur = new Joueur(getContext(),joystick, 500,1000,30);
         setFocusable(true);
             }
-
     public static int Nbennemi_Minute() {
         return Nbennemi_Minute;
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -84,22 +82,18 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
         return super.onTouchEvent(event);
     }
-
     @Override
     public void surfaceCreated( SurfaceHolder holder) {
         gameLoop.startLoop();
     }
-
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
     }
-
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
 
     }
-
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
@@ -132,9 +126,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         for (Balle balle : ListeBalle){
             balle.update();
         }
-
         // Fonction Qui va permettre d'enlever l'ennemi si il est touché par le tir du joueur
-        // Pour le moment l'ennemi sera supprimé lorsqu'il touche le joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
         Iterator<Balle> iteratorBalle = ListeBalle.iterator();
         while (iteratorEnnemi.hasNext()){

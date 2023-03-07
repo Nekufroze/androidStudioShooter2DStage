@@ -10,8 +10,8 @@ import com.example.shooter.assets.Joystick;
 import com.example.shooter.assets.Utils;
 
 /*
-La Classe Joueur désigne le Joueur principal, qui est controller grâce à un Joystick virtuel
-Cette classe est un héritage de la classe Circle qui est une classe Heriter de GameObject
+La class Joueur désigne le joueur principal, qui est contrôlé grâce à un Joystick virtuel
+Cette class est un héritage de la class Circle qui est une class hériter de GameObject
  */
 public class Joueur extends Circle {
     public static final double SPEED_PIXELS_PER_SECOND = 400.0;
@@ -21,7 +21,7 @@ public class Joueur extends Circle {
 
 
     public Joueur(Context context,Joystick joystick, double positionX, double positionY, double radius){
-    super(context, ContextCompat.getColor(context, R.color.joueur),positionX, positionY, radius);
+    super(ContextCompat.getColor(context, R.color.joueur),positionX, positionY, radius);
         this.joystick = joystick;
     }
 

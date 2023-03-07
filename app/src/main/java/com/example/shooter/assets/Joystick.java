@@ -66,12 +66,12 @@ public class Joystick {
     public void update() {
         updateInnerCirclePosition();
     }
-
+    // Cette fonction permet de mettre à jour la position du joystick
     private void updateInnerCirclePosition() {
         innerCircleCenterPositionX = (int) (outerCircleCenterPositionX + actuatorX*outerCircleRadius);
         innerCircleCenterPositionY = (int) (outerCircleCenterPositionY + actuatorY*outerCircleRadius);
     }
-
+    // Cette fonction permet au joystick de suivre le mouvement du doigt sur l'écran
     public void setActuator(double touchPositionX, double touchPositionY) {
         double deltaX = touchPositionX - outerCircleCenterPositionX;
         double deltaY = touchPositionY - outerCircleCenterPositionY;
