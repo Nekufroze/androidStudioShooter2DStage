@@ -92,7 +92,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-
+        gameLoop.stopLoop();
     }
     @Override
     public void draw(Canvas canvas){
