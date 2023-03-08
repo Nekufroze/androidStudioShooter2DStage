@@ -1,12 +1,12 @@
 package com.example.shooter;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TextView;
 
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
@@ -31,11 +31,13 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private int BalleATirer = 0;
     protected static int Nbennemi_Minute = 20;
     protected static int Nbennemi_Spawn = 0;
-    int NbEnnemiMort = 0;
+    protected int NbEnnemiMort = 0;
+    protected final SurfaceHolder surfaceHolder;
+
 
     public Jeu(Context context){
         super(context);
-        SurfaceHolder surfaceHolder = getHolder();
+        surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
         joystick = new Joystick(350, 1800, 120, 40);
@@ -76,10 +78,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 joystick.resetActuator();
             }
             return true;
-
-
-
-    }
+        }
         return super.onTouchEvent(event);
     }
     @Override
@@ -88,24 +87,31 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
     }
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-        gameLoop.stopLoop();
+    gameLoop.isRunning = false;
+    try {
+        gameLoop.join();
+    }catch (InterruptedException e) {
+        e.printStackTrace();
+    }
     }
     @Override
-    public void draw(Canvas canvas){
-        super.draw(canvas);
-        joystick.draw(canvas);
-        joueur.draw(canvas);
-        for (Ennemi ennemi : ListeEnnemi){
-            ennemi.draw(canvas);
+    public void draw(Canvas canvas) {
+        if (canvas == null) {
+            gameLoop.stopLoop();
+        }else {
+            super.draw(canvas);
+            joystick.draw(canvas);
+            joueur.draw(canvas);
+            for (Ennemi ennemi : ListeEnnemi) {
+                ennemi.draw(canvas);
+            }
+            for (Balle balle : ListeBalle) {
+                balle.draw(canvas);
+            }
         }
-        for (Balle balle : ListeBalle){
-            balle.draw(canvas);
-        }
-
     }
 
     public void update(){
@@ -128,9 +134,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         }
         // Fonction Qui va permettre d'enlever l'ennemi si il est touché par le tir du joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
-        Iterator<Balle> iteratorBalle = ListeBalle.iterator();
         while (iteratorEnnemi.hasNext()){
             Circle ennemi = iteratorEnnemi.next();
+            Iterator<Balle> iteratorBalle = ListeBalle.iterator();
             while (iteratorBalle.hasNext()){
                 Circle balle = iteratorBalle.next();
                 if (Circle.isColliding(balle, ennemi)){
@@ -139,7 +145,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                     System.out.println(NbEnnemiMort);
                     iteratorBalle.remove();
                     iteratorEnnemi.remove();
-                    break;
                 }
             }
         }

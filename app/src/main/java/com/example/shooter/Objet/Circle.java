@@ -17,8 +17,10 @@ public abstract class Circle extends GameObject {
         paint = new Paint();
         paint.setColor(color);
     }
-    // Fonction permettant de savoir si deux objets sont en collision en fonction de la distance entre les rayons des deux objets
-    // getDistanceBetweenObjects --> GameObject
+    /*
+        Fonction permettant de savoir si deux objets sont en collision en fonction de la distance entre les rayons des deux objets
+        getDistanceBetweenObjects --> GameObject
+    */
     public static boolean isColliding(Circle obj1, Circle obj2) {
         double distance = getDistanceBetweenObjects(obj1,obj2);
         double distanceToCollision = obj1.getRadius() + obj2.getRadius();

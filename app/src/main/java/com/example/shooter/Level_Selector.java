@@ -19,7 +19,7 @@ public class Level_Selector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_selector);
 
-        GridView mongridview = (GridView) findViewById(R.id.gridView1);
+        GridView mongridview = findViewById(R.id.gridView1);
         //Declaration d'un adaptateur qui servira à stocker les données à afficher dans le GridView.
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
         // Edit du nombre de colonne
@@ -37,6 +37,4 @@ public class Level_Selector extends AppCompatActivity {
         });
 
         }
-
-
-    }
+}

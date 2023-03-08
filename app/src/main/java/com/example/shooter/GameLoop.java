@@ -7,7 +7,7 @@ public class GameLoop extends Thread {
     // Nombre maximum d'update par seconde du jeu
     public static final double MAX_UPS = 60.0;
 
-    private boolean isRunning = false;
+    protected boolean isRunning = false;
     private final SurfaceHolder surfaceHolder;
     private final Jeu jeu;
     public GameLoop(Jeu jeu, SurfaceHolder surfaceHolder) {
@@ -23,21 +23,25 @@ public class GameLoop extends Thread {
         isRunning = false;
         interrupt();
     }
+
     @Override
-    public void run(){
+    public void run() {
         super.run();
         // Gameloop / Moteur du jeu
         Canvas canvas;
-        while(isRunning){
-            try{
-                canvas = surfaceHolder.lockCanvas();
-                jeu.update();
-                jeu.draw(canvas);
-                surfaceHolder.unlockCanvasAndPost(canvas);
-            }catch (IllegalArgumentException e){
-                e.printStackTrace();
+        if (!isRunning) {
+            currentThread().interrupt();
+        } else {
+            while (isRunning) {
+                try {
+                    canvas = surfaceHolder.lockCanvas();
+                    jeu.update();
+                    jeu.draw(canvas);
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
     }
-}
+    }
