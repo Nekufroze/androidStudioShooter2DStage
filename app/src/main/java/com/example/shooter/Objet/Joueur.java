@@ -59,6 +59,9 @@ public class Joueur extends Circle {
     }
 
     public void setPVRestant(int PointsDeVie) {
-        this.PointsDeVie = PointsDeVie;
+
+        if(PointsDeVie >= 0){
+            this.PointsDeVie = PointsDeVie;
+        }
     }
 }

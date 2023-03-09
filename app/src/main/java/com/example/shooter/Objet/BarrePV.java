@@ -51,7 +51,7 @@ Barre de pv qui montre le nombre de pv du joueur, ce montant seras changer grtâ
         // PV
         float VieG, VieH,VieD,VieBas, LargeurVie, HauteurVie;
         LargeurVie = largeur - 2*marge;
-        HauteurVie = hauteur - 2*marge;
+        HauteurVie = hauteur - marge;
         VieG = bordureG + marge;
         VieD = VieG + LargeurVie*PVRestantPourcentage;
         VieH = bordureBas - HauteurVie;
