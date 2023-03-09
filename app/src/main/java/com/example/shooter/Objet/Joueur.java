@@ -1,6 +1,7 @@
 package com.example.shooter.Objet;
 
 import android.content.Context;
+import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
@@ -16,13 +17,18 @@ Cette class est un héritage de la class Circle qui est une class hériter de Ga
 public class Joueur extends Circle {
     public static final double SPEED_PIXELS_PER_SECOND = 400.0;
     public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
+    public static final int MAX_PV = 10;
+    private int PointsDeVie;
 
     private final Joystick joystick;
+    private final BarrePV barrePV;
 
 
     public Joueur(Context context,Joystick joystick, double positionX, double positionY, double radius){
     super(ContextCompat.getColor(context, R.color.joueur),positionX, positionY, radius);
         this.joystick = joystick;
+        this.barrePV = new BarrePV(context, this);
+        this.PointsDeVie = MAX_PV;
     }
 
 
@@ -43,5 +49,16 @@ public class Joueur extends Circle {
 
         }
     }
+    public void draw(Canvas canvas){
+        super.draw(canvas);
+        barrePV.draw(canvas);
+    }
 
+    public int GetPVRestant() {
+        return PointsDeVie;
+    }
+
+    public void setPVRestant(int PointsDeVie) {
+        this.PointsDeVie = PointsDeVie;
+    }
 }

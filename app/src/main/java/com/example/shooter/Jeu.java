@@ -136,6 +136,11 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
         while (iteratorEnnemi.hasNext()){
             Circle ennemi = iteratorEnnemi.next();
+            if(Circle.isColliding(ennemi, joueur)){
+                joueur.setPVRestant(joueur.GetPVRestant() - 1);
+                iteratorEnnemi.remove();
+                continue;
+            }
             Iterator<Balle> iteratorBalle = ListeBalle.iterator();
             while (iteratorBalle.hasNext()){
                 Circle balle = iteratorBalle.next();
@@ -145,6 +150,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                     System.out.println(NbEnnemiMort);
                     iteratorBalle.remove();
                     iteratorEnnemi.remove();
+                    break;
                 }
             }
         }
