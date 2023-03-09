@@ -55,7 +55,7 @@ Barre de pv qui montre le nombre de pv du joueur, ce montant seras changer grtâ
         VieG = bordureG + marge;
         VieD = VieG + LargeurVie*PVRestantPourcentage;
         VieH = bordureBas - HauteurVie;
-        VieBas = bordureBas + marge;
+        VieBas = bordureBas - marge;
         canvas.drawRect(VieG, VieH,VieD,VieBas, ViePaint);
 
 
