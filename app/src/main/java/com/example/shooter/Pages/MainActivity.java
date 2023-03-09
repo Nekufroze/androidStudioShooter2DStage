@@ -1,10 +1,12 @@
-package com.example.shooter;
+package com.example.shooter.Pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.shooter.R;
 
 public class MainActivity extends AppCompatActivity {
 

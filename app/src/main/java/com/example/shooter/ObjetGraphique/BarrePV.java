@@ -1,4 +1,4 @@
-package com.example.shooter.Objet;
+package com.example.shooter.ObjetGraphique;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,12 +6,13 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.Objet.Joueur;
 import com.example.shooter.R;
 
 /*
 Barre de pv qui montre le nombre de pv du joueur, ce montant seras changer grtâce aux améliorations(à réaliser plus tard)
  */
- class BarrePV {
+public class BarrePV {
         private final Joueur joueur;
     private final int largeur;
     private final int hauteur;

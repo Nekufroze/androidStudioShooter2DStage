@@ -1,4 +1,4 @@
-package com.example.shooter.assets;
+package com.example.shooter.ObjetGraphique;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

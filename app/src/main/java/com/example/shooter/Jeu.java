@@ -1,6 +1,5 @@
 package com.example.shooter;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,7 +11,8 @@ import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
 import com.example.shooter.Objet.Ennemi;
 import com.example.shooter.Objet.Joueur;
-import com.example.shooter.assets.Joystick;
+import com.example.shooter.ObjetGraphique.GameOver;
+import com.example.shooter.ObjetGraphique.Joystick;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,15 +33,21 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     protected static int Nbennemi_Spawn = 0;
     protected int NbEnnemiMort = 0;
     protected final SurfaceHolder surfaceHolder;
+    private final GameOver gameOver;
 
 
     public Jeu(Context context){
         super(context);
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
+
         gameLoop = new GameLoop(this, surfaceHolder);
+
+        gameOver = new GameOver(getContext());
+
         joystick = new Joystick(350, 1800, 120, 40);
         joueur = new Joueur(getContext(),joystick, 500,1000,30);
+
         setFocusable(true);
             }
     public static int Nbennemi_Minute() {
@@ -102,6 +108,12 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         if (canvas == null) {
             gameLoop.stopLoop();
         }else {
+            // Fin du jeu si le joueur meurt
+
+            if(joueur.GetPVRestant() <=0){
+                gameOver.draw(canvas);
+                return;
+            }
             super.draw(canvas);
             joystick.draw(canvas);
             joueur.draw(canvas);
@@ -113,7 +125,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
-
     public void update(){
         joystick.update();
         joueur.update();

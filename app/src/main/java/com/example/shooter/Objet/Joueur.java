@@ -6,8 +6,9 @@ import android.graphics.Canvas;
 import androidx.core.content.ContextCompat;
 
 import com.example.shooter.GameLoop;
+import com.example.shooter.ObjetGraphique.BarrePV;
 import com.example.shooter.R;
-import com.example.shooter.assets.Joystick;
+import com.example.shooter.ObjetGraphique.Joystick;
 import com.example.shooter.assets.Utils;
 
 /*

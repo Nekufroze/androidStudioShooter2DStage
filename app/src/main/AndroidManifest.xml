@@ -11,25 +11,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shooter">
         <activity
-            android:name=".accueil"
+            android:name=".Pages.Accueil"
             android:exported="false" />
         <activity
             android:name=".Jeu"
             android:exported="false" />
         <activity
-            android:name=".Shop"
+            android:name=".Pages.Shop"
             android:exported="false" />
         <activity
-            android:name=".Inventory"
+            android:name=".Pages.Inventory"
             android:exported="false" />
         <activity
-            android:name=".Level_Selector"
+            android:name=".Pages.Level_Selector"
             android:exported="false" />
         <activity
             android:name=".GameLoop"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Pages.MainActivity"
             android:exported="true">
 
             <intent-filter>

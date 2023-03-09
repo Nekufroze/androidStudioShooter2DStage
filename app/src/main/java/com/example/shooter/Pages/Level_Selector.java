@@ -1,4 +1,4 @@
-package com.example.shooter;
+package com.example.shooter.Pages;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.example.shooter.Jeu;
+import com.example.shooter.R;
 
 public class Level_Selector extends AppCompatActivity {
 

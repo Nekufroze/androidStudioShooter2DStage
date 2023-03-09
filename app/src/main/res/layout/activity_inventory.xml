@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inventory">
+    tools:context=".Pages.Inventory">
 
 
     <Button
@@ -12,21 +12,20 @@
         android:layout_width="149dp"
         android:layout_height="73dp"
         android:layout_marginBottom="4dp"
-        android:text="@string/play"
         android:backgroundTint="@color/Orange"
+        android:text="@string/play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_Shop"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_Inv"
-        />
+        app:layout_constraintStart_toEndOf="@+id/btn_Inv" />
 
     <Button
         android:id="@+id/btn_Inv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/player"
         android:backgroundTint="@color/Orange"
+        android:text="@string/player"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_Play"
         app:layout_constraintHorizontal_bias="0.5"
@@ -37,8 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/shop"
         android:backgroundTint="@color/Orange"
+        android:text="@string/shop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,7 +47,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="187dp"
+        android:layout_marginTop="210dp"
         android:text="Inventory"
-        tools:layout_editor_absoluteX="187dp"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
