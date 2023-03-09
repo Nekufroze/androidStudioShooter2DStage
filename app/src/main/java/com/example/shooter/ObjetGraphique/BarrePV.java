@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.GameDisplay;
 import com.example.shooter.Objet.Joueur;
 import com.example.shooter.R;
 
@@ -36,7 +37,7 @@ public class BarrePV {
 
     }
 
-    public  void draw(Canvas canvas){
+    public  void draw(Canvas canvas, GameDisplay gameDisplay){
         float x = (float) joueur.getPositionX();
         float y = (float) joueur.getPositionY();
         float distanceToJoueur = 35;

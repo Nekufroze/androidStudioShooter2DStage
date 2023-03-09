@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.GameDisplay;
 import com.example.shooter.GameLoop;
 import com.example.shooter.ObjetGraphique.BarrePV;
 import com.example.shooter.R;
@@ -50,9 +51,9 @@ public class Joueur extends Circle {
 
         }
     }
-    public void draw(Canvas canvas){
-        super.draw(canvas);
-        barrePV.draw(canvas);
+    public void draw(Canvas canvas, GameDisplay gameDisplay){
+        super.draw(canvas, gameDisplay);
+        barrePV.draw(canvas, gameDisplay);
     }
 
     public int GetPVRestant() {

@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
-    private final GameLoop gameLoop;
+    private GameLoop gameLoop;
     private int joystickPointerid = 0;
     private final Joystick joystick;
     private final Joueur joueur;
@@ -34,17 +34,15 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     protected int NbEnnemiMort = 0;
     protected final SurfaceHolder surfaceHolder;
     private final GameOver gameOver;
+    private GameDisplay gameDisplay;
 
 
     public Jeu(Context context){
         super(context);
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-
         gameLoop = new GameLoop(this, surfaceHolder);
-
         gameOver = new GameOver(getContext());
-
         joystick = new Joystick(350, 1800, 120, 40);
         joueur = new Joueur(getContext(),joystick, 500,1000,30);
 
@@ -89,6 +87,11 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void surfaceCreated( SurfaceHolder holder) {
+        if(gameLoop.getState().equals(Thread.State.TERMINATED)){
+            SurfaceHolder surfaceholder = getHolder();
+            surfaceholder.addCallback(this);
+            gameLoop = new GameLoop(this, surfaceHolder);
+        }
         gameLoop.startLoop();
     }
     @Override
@@ -96,35 +99,26 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-    gameLoop.isRunning = false;
-    try {
-        gameLoop.join();
-    }catch (InterruptedException e) {
-        e.printStackTrace();
-    }
     }
     @Override
     public void draw(Canvas canvas) {
-        if (canvas == null) {
-            gameLoop.stopLoop();
-        }else {
-            // Fin du jeu si le joueur meurt
+        super.draw(canvas);
 
-            if(joueur.GetPVRestant() <=0){
-                gameOver.draw(canvas);
-                return;
-            }
-            super.draw(canvas);
-            joystick.draw(canvas);
-            joueur.draw(canvas);
-            for (Ennemi ennemi : ListeEnnemi) {
-                ennemi.draw(canvas);
+        joueur.draw(canvas, gameDisplay);
+        joystick.draw(canvas);
+
+        for (Ennemi ennemi : ListeEnnemi) {
+                ennemi.draw(canvas, gameDisplay);
             }
             for (Balle balle : ListeBalle) {
-                balle.draw(canvas);
+                balle.draw(canvas, gameDisplay);
             }
+        // Fin du jeu si le joueur meurt
+        if(joueur.GetPVRestant() <=0){
+            gameOver.draw(canvas);
         }
     }
+
     public void update(){
         joystick.update();
         joueur.update();
@@ -165,5 +159,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+    }
+
+    public void pause() {
+        gameLoop.stopLoop();
     }
 }

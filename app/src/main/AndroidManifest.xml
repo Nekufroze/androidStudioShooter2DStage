@@ -12,7 +12,13 @@
         android:theme="@style/Theme.Shooter">
         <activity
             android:name=".Pages.Accueil"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Jeu"
             android:exported="false" />
@@ -23,21 +29,11 @@
             android:name=".Pages.Inventory"
             android:exported="false" />
         <activity
-            android:name=".Pages.Level_Selector"
-            android:exported="false" />
-        <activity
             android:name=".GameLoop"
             android:exported="false" />
         <activity
             android:name=".Pages.MainActivity"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>

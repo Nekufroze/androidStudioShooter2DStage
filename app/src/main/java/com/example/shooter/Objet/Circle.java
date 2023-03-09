@@ -2,6 +2,8 @@ package com.example.shooter.Objet;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.shooter.GameDisplay;
+
 /*
 Circle est une class mise en Abstract ne pouvant donc pas être créer (Class Mère) elle réalise
 la création visuel des objets
@@ -34,7 +36,7 @@ public abstract class Circle extends GameObject {
         return radius;
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
         canvas.drawCircle((float)positionX,(float)positionY,(float)radius,paint);
     }
 }

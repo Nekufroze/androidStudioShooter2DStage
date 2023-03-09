@@ -14,34 +14,42 @@ public class GameLoop extends Thread {
         this.jeu = jeu;
         this.surfaceHolder = surfaceHolder;
     }
-
     public void startLoop(){
         isRunning = true;
         start();
     }
     public void stopLoop(){
         isRunning = false;
-        interrupt();
+        try {
+            join();
+        }catch (InterruptedException e){
+        e.printStackTrace();
+        }
     }
 
     @Override
     public void run() {
         super.run();
         // Gameloop / Moteur du jeu
-        Canvas canvas;
-        if (!isRunning) {
-            currentThread().interrupt();
-        } else {
+        Canvas canvas = null;
             while (isRunning) {
                 try {
                     canvas = surfaceHolder.lockCanvas();
-                    jeu.update();
-                    jeu.draw(canvas);
-                    surfaceHolder.unlockCanvasAndPost(canvas);
+                    synchronized (surfaceHolder) {
+                        jeu.update();
+                        jeu.draw(canvas);
+                    }
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
+                }finally {
+                    if (canvas != null){
+                        try {
+                            surfaceHolder.unlockCanvasAndPost(canvas);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
-    }
-    }
+}

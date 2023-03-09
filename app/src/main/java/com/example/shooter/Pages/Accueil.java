@@ -2,6 +2,7 @@ package com.example.shooter.Pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -16,5 +17,9 @@ public class Accueil extends AppCompatActivity {
         setContentView(R.layout.activity_accueil);
 
         Button btn_Start = findViewById(R.id.btn_Start);
+        btn_Start.setOnClickListener(v -> {
+            Intent myIntent = new Intent(Accueil.this, MainActivity.class);
+            startActivity(myIntent);
+        });
     }
 }
