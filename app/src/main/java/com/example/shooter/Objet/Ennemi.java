@@ -16,7 +16,7 @@ de GameObject
 public class Ennemi extends Circle {
     private static final double SPEED_PIXELS_PER_SECOND = Joueur.SPEED_PIXELS_PER_SECOND * 0.55;
     private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
-    private static final double SPAWNS_PER_MINUTE = Jeu.Nbennemi_Minute();
+    private static final double SPAWNS_PER_MINUTE = Jeu.GetNbennemi_Minute();
     private static final double SPAWNS_PER_SECOND = SPAWNS_PER_MINUTE / 60;
     private static final double UPDATES_PER_SPAWN = GameLoop.MAX_UPS/SPAWNS_PER_SECOND;
     private static double updatesUntilNextSpawn = UPDATES_PER_SPAWN;

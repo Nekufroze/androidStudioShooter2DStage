@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.Jeu;
 import com.example.shooter.R;
 
 public class GameOver {
@@ -16,16 +17,18 @@ public class GameOver {
     }
 
     public void draw(Canvas canvas) {
-        String text = "Game Over";
-
+        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort();
         float x = 250;
         float y = 250;
 
         Paint paint = new Paint();
         int couleur = ContextCompat.getColor(context , R.color.GameOver);
         paint.setColor(couleur);
-        float textSize = 100;
+        float textSize = 80;
         paint.setTextSize(textSize);
-        canvas.drawText(text, x,y,paint);
+        for (String line: text.split("\n")) {
+            canvas.drawText(line, x, y, paint);
+            y += paint.descent() - paint.ascent();
+        }
     }
 }

@@ -8,8 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Orange">#FF6900</color>
-    <color name="Light_Grey">#A96C6C6C</color>
-    <color name="Grey">#2B2B2B</color>
     <color name="joueur">#A96C6C6C</color>
     <color name="ennemi">#A9E30000</color>
     <color name="Balle">#002DB3</color>

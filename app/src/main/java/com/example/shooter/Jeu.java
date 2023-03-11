@@ -8,9 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
-
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
 import com.example.shooter.Objet.Ennemi;
@@ -34,9 +31,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private final List<Ennemi> ListeEnnemi = new ArrayList<>();
     private final List<Balle> ListeBalle = new ArrayList<>();
     private int BalleATirer = 0;
-    protected static int Nbennemi_Minute = 20;
+    protected static double Nbennemi_Minute = 30;
     protected static int Nbennemi_Spawn = 0;
-    protected int NbEnnemiMort = 0;
+    protected static int NbEnnemiMort = 0;
     protected final SurfaceHolder surfaceHolder;
     private final GameOver gameOver;
     private final GameDisplay gameDisplay;
@@ -47,7 +44,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
-        gameOver = new GameOver(getContext());
+        gameOver = new GameOver(context);
+
         joystick = new Joystick(350, 1800, 120, 40);
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
@@ -59,12 +57,16 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
         setFocusable(true);
             }
-    public static int Nbennemi_Minute() {
+    public static double GetNbennemi_Minute() {
+        if (NbEnnemiMort % 20 == 0 && NbEnnemiMort != 0){
+            Nbennemi_Minute = Nbennemi_Minute + (Nbennemi_Minute*0.25);
+        }
         return Nbennemi_Minute;
     }
+    public static int GetNbEnnemiMort(){return  NbEnnemiMort;}
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
+    performClick();
     switch (event.getActionMasked()){
         // Cas ou le joystick est pressé
         case MotionEvent.ACTION_DOWN:
@@ -96,6 +98,13 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         }
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public boolean performClick() {
+        // handle click event
+        return super.performClick();
+    }
+
     @Override
     public void surfaceCreated( SurfaceHolder holder) {
         if(gameLoop.getState().equals(Thread.State.TERMINATED)){
@@ -117,6 +126,10 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
         joueur.draw(canvas, gameDisplay);
         joystick.draw(canvas);
+        // Fin du jeu si le joueur meurt
+        if(joueur.GetPVRestant() <=0){
+            gameOver.draw(canvas);
+        }
 
         for (Ennemi ennemi : ListeEnnemi) {
                 ennemi.draw(canvas, gameDisplay);
@@ -124,15 +137,17 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             for (Balle balle : ListeBalle) {
                 balle.draw(canvas, gameDisplay);
             }
-        // Fin du jeu si le joueur meurt
-        if(joueur.GetPVRestant() <=0){
-            gameOver.draw(canvas);
-        }
     }
 
     public void update(){
         joystick.update();
         joueur.update();
+
+        // Stop d'update le jeu lorsque le joueur est mort.
+        if(joueur.GetPVRestant() <= 0){
+            return;
+        }
+
         // Spawn un ennemi lorsqu'il doit spawn
     if(Ennemi.readyToSpawn()){
         ListeEnnemi.add(new Ennemi(getContext(), joueur));
@@ -163,6 +178,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 if (Circle.isColliding(balle, ennemi)){
                     NbEnnemiMort++;
                     Nbennemi_Spawn++;
+                    System.out.println(GetNbennemi_Minute());
                     System.out.println(NbEnnemiMort);
                     iteratorBalle.remove();
                     iteratorEnnemi.remove();

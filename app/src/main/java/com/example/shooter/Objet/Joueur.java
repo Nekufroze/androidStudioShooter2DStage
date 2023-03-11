@@ -55,15 +55,15 @@ public class Joueur extends Circle {
     public void draw(Canvas canvas, GameDisplay gameDisplay){
         sprite.draw(
                 canvas,
-                (int)gameDisplay.gameToDisplayCoordinatesY(getPositionX())-sprite.getWidth()/2,
-                (int)gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
+                (int)gameDisplay.gameToDisplayCoordinatesX(getPositionX())-64,
+                (int)gameDisplay.gameToDisplayCoordinatesY(getPositionY()) -40
+        );
         barrePV.draw(canvas, gameDisplay);
     }
     public int GetPVRestant() {
         return PointsDeVie;
     }
     public void setPVRestant(int PointsDeVie) {
-
         if(PointsDeVie >= 0){
             this.PointsDeVie = PointsDeVie;
         }

@@ -15,7 +15,7 @@ Barre de pv qui montre le nombre de pv du joueur, ce montant seras changer grtâ
  */
 public class BarrePV {
         private final Joueur joueur;
-    private final int largeur;
+    private final float largeur;
     private final int hauteur;
     private final int marge;
     private final Paint bordurePaint;

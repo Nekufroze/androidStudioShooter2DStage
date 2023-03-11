@@ -1,6 +1,7 @@
 package com.example.shooter.assets;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 
 public class Sprite {
@@ -16,16 +17,17 @@ public class Sprite {
         canvas.drawBitmap(
                 spriteSheet.getBitmap(),
                 rect,
-                new Rect(x,y,x+getWidth(),y+getHeight()),
+                new Rect(x,y,x+getWidth()*4,y+getHeight()*4),
                 null
         );
     }
 
-    public int getHeight() {
-        return rect.height();
-    }
 
     public int getWidth() {
         return rect.width();
+    }
+
+    public int getHeight() {
+        return rect.height();
     }
 }
