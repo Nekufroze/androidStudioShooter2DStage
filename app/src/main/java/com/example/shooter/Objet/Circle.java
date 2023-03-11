@@ -37,6 +37,10 @@ public abstract class Circle extends GameObject {
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        canvas.drawCircle((float)positionX,(float)positionY,(float)radius,paint);
+        canvas.drawCircle(
+                (float)gameDisplay.gameToDisplayCoordinatesX(positionX),
+                (float)gameDisplay.gameToDisplayCoordinatesY(positionY),
+                (float)radius,
+                        paint);
     }
 }

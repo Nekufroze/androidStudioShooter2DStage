@@ -49,7 +49,12 @@ public class BarrePV {
         bordureBas = y - distanceToJoueur;
         bordureH = bordureBas - hauteur;
         // Bordure
-        canvas.drawRect(bordureG, bordureH, bordureD, bordureBas, bordurePaint);
+        canvas.drawRect(
+                (float)gameDisplay.gameToDisplayCoordinatesX(bordureG),
+                (float)gameDisplay.gameToDisplayCoordinatesY(bordureH),
+                (float)gameDisplay.gameToDisplayCoordinatesX(bordureD),
+                (float)gameDisplay.gameToDisplayCoordinatesY(bordureBas),
+                bordurePaint);
         // PV
         float VieG, VieH,VieD,VieBas, LargeurVie, HauteurVie;
         LargeurVie = largeur - 2*marge;
@@ -58,7 +63,12 @@ public class BarrePV {
         VieD = VieG + LargeurVie*PVRestantPourcentage;
         VieH = bordureBas - HauteurVie;
         VieBas = bordureBas - marge;
-        canvas.drawRect(VieG, VieH,VieD,VieBas, ViePaint);
+        canvas.drawRect(
+                (float)gameDisplay.gameToDisplayCoordinatesX(VieG),
+                (float)gameDisplay.gameToDisplayCoordinatesY(VieH),
+                (float)gameDisplay.gameToDisplayCoordinatesX(VieD),
+                (float)gameDisplay.gameToDisplayCoordinatesY(VieBas),
+                ViePaint);
 
 
      }

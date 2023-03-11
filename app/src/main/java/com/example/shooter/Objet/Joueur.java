@@ -10,6 +10,7 @@ import com.example.shooter.GameLoop;
 import com.example.shooter.ObjetGraphique.BarrePV;
 import com.example.shooter.R;
 import com.example.shooter.ObjetGraphique.Joystick;
+import com.example.shooter.assets.Sprite;
 import com.example.shooter.assets.Utils;
 
 /*
@@ -20,17 +21,17 @@ public class Joueur extends Circle {
     public static final double SPEED_PIXELS_PER_SECOND = 400.0;
     public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
     public static final int MAX_PV = 10;
-    private int PointsDeVie;
-
+    private int PointsDeVie = MAX_PV;
+    private final Sprite sprite;
     private final Joystick joystick;
     private final BarrePV barrePV;
 
 
-    public Joueur(Context context,Joystick joystick, double positionX, double positionY, double radius){
+    public Joueur(Context context,Joystick joystick, double positionX, double positionY, double radius, Sprite sprite){
     super(ContextCompat.getColor(context, R.color.joueur),positionX, positionY, radius);
         this.joystick = joystick;
         this.barrePV = new BarrePV(context, this);
-        this.PointsDeVie = MAX_PV;
+        this.sprite = sprite;
     }
 
 
@@ -52,14 +53,15 @@ public class Joueur extends Circle {
         }
     }
     public void draw(Canvas canvas, GameDisplay gameDisplay){
-        super.draw(canvas, gameDisplay);
+        sprite.draw(
+                canvas,
+                (int)gameDisplay.gameToDisplayCoordinatesY(getPositionX())-sprite.getWidth()/2,
+                (int)gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
         barrePV.draw(canvas, gameDisplay);
     }
-
     public int GetPVRestant() {
         return PointsDeVie;
     }
-
     public void setPVRestant(int PointsDeVie) {
 
         if(PointsDeVie >= 0){

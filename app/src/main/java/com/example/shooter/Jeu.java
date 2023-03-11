@@ -1,11 +1,15 @@
 package com.example.shooter;
 import androidx.annotation.NonNull;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
 
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
@@ -13,6 +17,7 @@ import com.example.shooter.Objet.Ennemi;
 import com.example.shooter.Objet.Joueur;
 import com.example.shooter.ObjetGraphique.GameOver;
 import com.example.shooter.ObjetGraphique.Joystick;
+import com.example.shooter.assets.SpriteSheet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +39,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     protected int NbEnnemiMort = 0;
     protected final SurfaceHolder surfaceHolder;
     private final GameOver gameOver;
-    private GameDisplay gameDisplay;
+    private final GameDisplay gameDisplay;
 
 
     public Jeu(Context context){
@@ -44,7 +49,13 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(getContext());
         joystick = new Joystick(350, 1800, 120, 40);
-        joueur = new Joueur(getContext(),joystick, 500,1000,30);
+        SpriteSheet spriteSheet = new SpriteSheet(context);
+        joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
+
+        // initialize La vue du jeu et ce centre sur le joueur
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, joueur);
 
         setFocusable(true);
             }
@@ -159,6 +170,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+        gameDisplay.update();
     }
 
     public void pause() {
