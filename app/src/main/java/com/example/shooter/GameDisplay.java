@@ -26,7 +26,7 @@ public class GameDisplay {
         return positionX + gameToDisplayCoordinateOffsetX;
     }
 
-    public double gameToDisplayCoordinatesY(double positionY) {
+    public double gameToDisplayCoordinatesY(double positionY ) {
         return positionY + gameToDisplayCoordinateOffsetY;
 
     }

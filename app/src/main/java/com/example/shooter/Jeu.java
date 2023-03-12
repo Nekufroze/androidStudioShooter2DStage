@@ -22,7 +22,6 @@ import java.util.List;
 /*
  Sert à gérer le jeu et update le render des objets...
  */
-
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private int joystickPointerid = 0;
@@ -54,12 +53,11 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, joueur);
-
         setFocusable(true);
             }
     public static double GetNbennemi_Minute() {
         if (NbEnnemiMort % 20 == 0 && NbEnnemiMort != 0){
-            Nbennemi_Minute = Nbennemi_Minute + (Nbennemi_Minute*0.25);
+            Nbennemi_Minute = Nbennemi_Minute *1.25;
         }
         return Nbennemi_Minute;
     }
@@ -147,7 +145,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         if(joueur.GetPVRestant() <= 0){
             return;
         }
-
         // Spawn un ennemi lorsqu'il doit spawn
     if(Ennemi.readyToSpawn()){
         ListeEnnemi.add(new Ennemi(getContext(), joueur));

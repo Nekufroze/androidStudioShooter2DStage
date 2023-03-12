@@ -11,10 +11,10 @@ import com.example.shooter.Objet.Joueur;
 import com.example.shooter.R;
 
 /*
-Barre de pv qui montre le nombre de pv du joueur, ce montant seras changer grtâce aux améliorations(à réaliser plus tard)
+Barre de pv qui montre le nombre de pv du joueur, ce montant seras changer grâce aux améliorations (à réaliser plus tard)
  */
 public class BarrePV {
-        private final Joueur joueur;
+    private final Joueur joueur;
     private final float largeur;
     private final int hauteur;
     private final int marge;

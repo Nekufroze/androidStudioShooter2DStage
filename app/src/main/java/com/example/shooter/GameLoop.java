@@ -26,7 +26,6 @@ public class GameLoop extends Thread {
         e.printStackTrace();
         }
     }
-
     @Override
     public void run() {
         super.run();
