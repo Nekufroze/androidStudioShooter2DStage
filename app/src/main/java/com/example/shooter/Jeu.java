@@ -37,14 +37,12 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private final GameOver gameOver;
     private final GameDisplay gameDisplay;
 
-
     public Jeu(Context context){
         super(context);
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(context);
-
         joystick = new Joystick(350, 1800, 120, 40);
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
@@ -60,8 +58,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             Nbennemi_Minute = Nbennemi_Minute *1.25;
         }
         return Nbennemi_Minute;
-    }
-    public static int GetNbEnnemiMort(){return  NbEnnemiMort;}
+    }    public static int GetNbEnnemiMort(){return  NbEnnemiMort;}
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     performClick();
