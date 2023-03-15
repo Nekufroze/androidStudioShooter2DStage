@@ -1,11 +1,15 @@
 package com.example.shooter.Objet;
 
 import android.content.Context;
+import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.GameDisplay;
 import com.example.shooter.GameLoop;
 import com.example.shooter.Jeu;
+import com.example.shooter.ObjetGraphique.BarrePV;
+import com.example.shooter.ObjetGraphique.BarrePVEnnemi;
 import com.example.shooter.R;
 
 /*
@@ -20,7 +24,11 @@ public class Ennemi extends Circle {
     private static final double SPAWNS_PER_SECOND = SPAWNS_PER_MINUTE / 60;
     private static final double UPDATES_PER_SPAWN = GameLoop.MAX_UPS/SPAWNS_PER_SECOND;
     private static double updatesUntilNextSpawn = UPDATES_PER_SPAWN;
+    public static final int MAX_PV = 2;
+    private int PointsDeVie = MAX_PV;
     private final Joueur joueur;
+    private final BarrePVEnnemi barrePVEnnemi;
+
 
     public Ennemi(Context context, Joueur joueur) {
         super(
@@ -29,6 +37,7 @@ public class Ennemi extends Circle {
                 Math.random()*1000,
                 30
         );
+            this.barrePVEnnemi = new BarrePVEnnemi(context, this);
             this.joueur = joueur;
     }
 
@@ -44,6 +53,12 @@ public class Ennemi extends Circle {
             updatesUntilNextSpawn --;
             return false;
         }
+    }
+
+    @Override
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
+            super.draw(canvas, gameDisplay);
+    barrePVEnnemi.draw(canvas, gameDisplay);
     }
 
     @Override
@@ -73,5 +88,15 @@ public class Ennemi extends Circle {
 
         positionX += velocityX;
         positionY += velocityY;
+    }
+
+    public int GetPVRestant() {
+        return PointsDeVie;
+    }
+
+    public void setPVRestant(int PointsDeVie) {
+        if(PointsDeVie >= 0){
+            this.PointsDeVie = PointsDeVie;
+        }
     }
 }

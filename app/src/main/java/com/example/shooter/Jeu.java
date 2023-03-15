@@ -12,6 +12,7 @@ import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
 import com.example.shooter.Objet.Ennemi;
 import com.example.shooter.Objet.Joueur;
+import com.example.shooter.Objet.XP;
 import com.example.shooter.ObjetGraphique.GameOver;
 import com.example.shooter.ObjetGraphique.Joystick;
 import com.example.shooter.assets.SpriteSheet;
@@ -32,6 +33,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private int BalleATirer = 0;
     protected static double Nbennemi_Minute = 30;
     protected static int Nbennemi_Spawn = 0;
+    protected static int XP_Spawn = 0;
     protected static int NbEnnemiMort = 0;
     protected final SurfaceHolder surfaceHolder;
     private final GameOver gameOver;
@@ -160,7 +162,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         // Fonction Qui va permettre d'enlever l'ennemi si il est touché par le tir du joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
         while (iteratorEnnemi.hasNext()){
-            Circle ennemi = iteratorEnnemi.next();
+            Ennemi ennemi = iteratorEnnemi.next();
             if(Circle.isColliding(ennemi, joueur)){
                 joueur.setPVRestant(joueur.GetPVRestant() - 1);
                 iteratorEnnemi.remove();
@@ -170,13 +172,21 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             while (iteratorBalle.hasNext()){
                 Circle balle = iteratorBalle.next();
                 if (Circle.isColliding(balle, ennemi)){
-                    NbEnnemiMort++;
-                    Nbennemi_Spawn++;
-                    System.out.println(GetNbennemi_Minute());
-                    System.out.println(NbEnnemiMort);
-                    iteratorBalle.remove();
-                    iteratorEnnemi.remove();
-                    break;
+                    if(ennemi.GetPVRestant() == 1){
+                        NbEnnemiMort++;
+                        Nbennemi_Spawn++;
+                        XP_Spawn++;
+                        System.out.println(GetNbennemi_Minute());
+                        System.out.println(NbEnnemiMort);
+                        iteratorBalle.remove();
+                        iteratorEnnemi.remove();
+                        break;
+                    }
+                    else{
+                        ennemi.setPVRestant(ennemi.GetPVRestant()-1);
+                        iteratorBalle.remove();
+                    }
+
                 }
             }
         }

@@ -3,6 +3,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.example.shooter.GameDisplay;
+import com.example.shooter.ObjetGraphique.BarrePVEnnemi;
 
 /*
 Circle est une class mise en Abstract ne pouvant donc pas être créer (Class Mère) elle réalise

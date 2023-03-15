@@ -38,8 +38,4 @@ public class MainActivity extends AppCompatActivity {
         jeu.pause();
         super.onPause();
     }
-    @Override
-    public void onBackPressed(){
-        // Si l'on appuie sur le bouton retour du téléphone aucune action ne sera réaliser
-    }
 }
