@@ -11,6 +11,7 @@
     <color name="joueur">#A96C6C6C</color>
     <color name="ennemi">#A9E30000</color>
     <color name="Balle">#002DB3</color>
+    <color name="XP">#00FF0A</color>
     <color name="BarrePvBordure">#A0A0A0</color>
     <color name="PVCouleur">#00FF00</color>
     <color name="GameOver">#C73126</color>

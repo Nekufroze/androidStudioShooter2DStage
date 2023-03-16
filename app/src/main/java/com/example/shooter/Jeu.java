@@ -30,6 +30,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private final Joueur joueur;
     private final List<Ennemi> ListeEnnemi = new ArrayList<>();
     private final List<Balle> ListeBalle = new ArrayList<>();
+    private final List<XP> ListeXP = new ArrayList<>();
+    private int NbXP = 0;
     private int BalleATirer = 0;
     protected static double Nbennemi_Minute = 30;
     protected static int Nbennemi_Spawn = 0;
@@ -131,9 +133,12 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         for (Ennemi ennemi : ListeEnnemi) {
                 ennemi.draw(canvas, gameDisplay);
             }
-            for (Balle balle : ListeBalle) {
-                balle.draw(canvas, gameDisplay);
-            }
+        for (Balle balle : ListeBalle) {
+            balle.draw(canvas, gameDisplay);
+        }
+        for (XP xp : ListeXP){
+            xp.draw(canvas, gameDisplay);
+        }
     }
 
     public void update(){
@@ -161,6 +166,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         }
         // Fonction Qui va permettre d'enlever l'ennemi si il est touché par le tir du joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
+        Iterator<XP> xpIterator = ListeXP.iterator();
         while (iteratorEnnemi.hasNext()){
             Ennemi ennemi = iteratorEnnemi.next();
             if(Circle.isColliding(ennemi, joueur)){
@@ -173,6 +179,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 Circle balle = iteratorBalle.next();
                 if (Circle.isColliding(balle, ennemi)){
                     if(ennemi.GetPVRestant() == 1){
+                        ListeXP.add(new XP(getContext(), ennemi));
                         NbEnnemiMort++;
                         Nbennemi_Spawn++;
                         XP_Spawn++;
@@ -190,9 +197,16 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+        while (xpIterator.hasNext()){
+            XP xp = xpIterator.next();
+            if(Circle.isColliding(xp,joueur)){
+                xpIterator.remove();
+                NbXP++;
+                System.out.println(NbXP + " xp");
+            }
+        }
         gameDisplay.update();
     }
-
     public void pause() {
         gameLoop.stopLoop();
     }
