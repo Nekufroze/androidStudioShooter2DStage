@@ -24,18 +24,17 @@ import java.util.List;
  Sert à gérer le jeu et update le render des objets...
  */
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
-    private GameLoop gameLoop;
+    private static GameLoop gameLoop;
     private int joystickPointerid = 0;
     private final Joystick joystick;
     private final Joueur joueur;
     private final List<Ennemi> ListeEnnemi = new ArrayList<>();
     private final List<Balle> ListeBalle = new ArrayList<>();
     private final List<XP> ListeXP = new ArrayList<>();
-    private int NbXP = 0;
+    private static int NbXP = 0;
     private int BalleATirer = 0;
     protected static double Nbennemi_Minute = 30;
     protected static int Nbennemi_Spawn = 0;
-    protected static int XP_Spawn = 0;
     protected static int NbEnnemiMort = 0;
     protected final SurfaceHolder surfaceHolder;
     private final GameOver gameOver;
@@ -50,7 +49,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         joystick = new Joystick(350, 1800, 120, 40);
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
-
         // initialize La vue du jeu et ce centre sur le joueur
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -62,7 +60,14 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             Nbennemi_Minute = Nbennemi_Minute *1.25;
         }
         return Nbennemi_Minute;
-    }    public static int GetNbEnnemiMort(){return  NbEnnemiMort;}
+    }
+
+    public static int GetXpPartie(){
+        return NbXP;
+    }
+
+    public static int GetNbEnnemiMort(){
+        return  NbEnnemiMort;}
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     performClick();
@@ -166,7 +171,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         }
         // Fonction Qui va permettre d'enlever l'ennemi si il est touché par le tir du joueur
         Iterator<Ennemi> iteratorEnnemi = ListeEnnemi.iterator();
-        Iterator<XP> xpIterator = ListeXP.iterator();
         while (iteratorEnnemi.hasNext()){
             Ennemi ennemi = iteratorEnnemi.next();
             if(Circle.isColliding(ennemi, joueur)){
@@ -182,7 +186,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                         ListeXP.add(new XP(getContext(), ennemi));
                         NbEnnemiMort++;
                         Nbennemi_Spawn++;
-                        XP_Spawn++;
                         System.out.println(GetNbennemi_Minute());
                         System.out.println(NbEnnemiMort);
                         iteratorBalle.remove();
@@ -197,17 +200,20 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+        Iterator<XP> xpIterator = ListeXP.iterator();
         while (xpIterator.hasNext()){
             XP xp = xpIterator.next();
             if(Circle.isColliding(xp,joueur)){
                 xpIterator.remove();
                 NbXP++;
+                XP.SetXpJoueur(1);
+                XP.SaveXPJoueur();
                 System.out.println(NbXP + " xp");
             }
         }
         gameDisplay.update();
     }
-    public void pause() {
+    public static void pause() {
         gameLoop.stopLoop();
     }
 }

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import com.example.shooter.Jeu;
+import com.example.shooter.Objet.XP;
 import com.example.shooter.R;
 
 public class GameOver {
@@ -14,10 +15,10 @@ public class GameOver {
 
     public GameOver(Context context){
         this.context = context;
+        Jeu.pause();
     }
-
     public void draw(Canvas canvas) {
-        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort();
+        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort() + "\nXP Acquis : " + Jeu.GetXpPartie() + "\n XP Total : " + XP.GetXpJoueur();
         float x = 250;
         float y = 250;
 
