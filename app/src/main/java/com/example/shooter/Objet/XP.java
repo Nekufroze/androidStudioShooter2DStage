@@ -14,16 +14,8 @@ public class XP extends Circle{
                 ennemi.getPositionY(),
                 10
         );
-        SharedPreferences sharedPreferences = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
-
     }
     @Override
     public void update() {
-    }
-    public static void SetXpJoueur(int xp){
-        SharedPreferences sharedPreferences = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
-
-    public static int GetXpJoueur(){
-        return XPJoueur;
     }
 }

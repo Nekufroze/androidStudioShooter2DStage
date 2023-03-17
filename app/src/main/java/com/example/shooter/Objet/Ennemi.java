@@ -69,7 +69,6 @@ public class Ennemi extends Circle {
         // Vecteur de l'enemmi au Joueur (en X et Y)
         double distanceToJoueurX = joueur.getPositionX() - positionX;
         double distanceToJoueurY = joueur.getPositionY() - positionY;
-//
         // Calcul de la distance entre l'ennemi et le Joueur
         double distanceToJoueur = GameObject.getDistanceBetweenObjects(this, joueur);
         // Calcul de la direction de l'ennemi au Joueur

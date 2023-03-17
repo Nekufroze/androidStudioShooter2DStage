@@ -18,6 +18,8 @@ public class GameLoop extends Thread {
         isRunning = true;
         start();
     }
+
+
     public void stopLoop(){
         isRunning = false;
         try {

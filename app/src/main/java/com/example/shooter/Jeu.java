@@ -12,6 +12,7 @@ import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
 import com.example.shooter.Objet.Ennemi;
 import com.example.shooter.Objet.Joueur;
+import com.example.shooter.Objet.Lunar;
 import com.example.shooter.Objet.XP;
 import com.example.shooter.ObjetGraphique.GameOver;
 import com.example.shooter.ObjetGraphique.Joystick;
@@ -31,8 +32,13 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     private final List<Ennemi> ListeEnnemi = new ArrayList<>();
     private final List<Balle> ListeBalle = new ArrayList<>();
     private final List<XP> ListeXP = new ArrayList<>();
+    private final List<Lunar> ListeLunar = new ArrayList<>();
     private static int NbXP = 0;
+    private static int NbLunarP = 0;
     private int BalleATirer = 0;
+    private final int minLunar = 1;
+    private final int maxLunar = 3;
+    private final int randomLunar = (int) (Math.random() * (maxLunar - minLunar )) + minLunar;
     protected static double Nbennemi_Minute = 30;
     protected static int Nbennemi_Spawn = 0;
     protected static int NbEnnemiMort = 0;
@@ -65,7 +71,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public static int GetXpPartie(){
         return NbXP;
     }
-
+    public static int GetLunarPartie(){
+        return NbLunarP;
+    }
     public static int GetNbEnnemiMort(){
         return  NbEnnemiMort;}
     @Override
@@ -144,6 +152,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         for (XP xp : ListeXP){
             xp.draw(canvas, gameDisplay);
         }
+        for (Lunar lunar : ListeLunar){
+            lunar.draw(canvas, gameDisplay);
+        }
     }
 
     public void update(){
@@ -184,6 +195,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 if (Circle.isColliding(balle, ennemi)){
                     if(ennemi.GetPVRestant() == 1){
                         ListeXP.add(new XP(getContext(), ennemi));
+                        for (int i = 0; i < randomLunar; i++) {
+                            ListeLunar.add(new Lunar(getContext(), ennemi));
+                        }
                         NbEnnemiMort++;
                         Nbennemi_Spawn++;
                         System.out.println(GetNbennemi_Minute());
@@ -200,14 +214,21 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+        Iterator<Lunar>LunarIterator = ListeLunar.iterator();
+        while (LunarIterator.hasNext()){
+            Lunar lunar = LunarIterator.next();
+            if(Circle.isColliding(lunar, joueur)){
+                LunarIterator.remove();
+                NbLunarP++;
+                System.out.println(NbLunarP + " Lunar");
+            }
+        }
         Iterator<XP> xpIterator = ListeXP.iterator();
         while (xpIterator.hasNext()){
             XP xp = xpIterator.next();
             if(Circle.isColliding(xp,joueur)){
                 xpIterator.remove();
                 NbXP++;
-                XP.SetXpJoueur(1);
-                XP.SaveXPJoueur();
                 System.out.println(NbXP + " xp");
             }
         }
