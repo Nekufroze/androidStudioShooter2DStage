@@ -160,9 +160,10 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public void update(){
         joystick.update();
         joueur.update();
-
         // Stop d'update le jeu lorsque le joueur est mort.
         if(joueur.GetPVRestant() <= 0){
+        Lunar.setLunar(GetLunarPartie());
+        XP.setXP(GetXpPartie());
             return;
         }
         // Spawn un ennemi lorsqu'il doit spawn
