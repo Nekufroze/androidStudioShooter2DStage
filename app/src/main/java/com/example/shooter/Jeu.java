@@ -142,7 +142,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         if(joueur.GetPVRestant() <=0){
             gameOver.draw(canvas);
         }
-
         for (Ennemi ennemi : ListeEnnemi) {
                 ennemi.draw(canvas, gameDisplay);
             }

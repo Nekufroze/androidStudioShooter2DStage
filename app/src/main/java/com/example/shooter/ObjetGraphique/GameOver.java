@@ -19,7 +19,7 @@ public class GameOver {
         Jeu.pause();
     }
     public void draw(Canvas canvas) {
-        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort() + "\nXP Acquis : " + Jeu.GetXpPartie() + "\nXP Total : " + XP.getXP() + "\nLunar Acquis : "
+        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort() + "\nXP Acquis : " + Jeu.GetXpPartie() + "\nXP Total : " + /* XP.getXP() +*/ "\nLunar Acquis : "
                         + Jeu.GetLunarPartie() + "\nLunar Total : " + Lunar.getLunar();
         float x = 250;
         float y = 250;
