@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.shooter.DataBase.Kraken2Database;
 import com.example.shooter.Jeu;
 import com.example.shooter.Objet.Lunar;
 import com.example.shooter.Objet.XP;
@@ -19,8 +20,8 @@ public class GameOver {
         Jeu.pause();
     }
     public void draw(Canvas canvas) {
-        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort() + "\nXP Acquis : " + Jeu.GetXpPartie() + "\nXP Total : " + /* XP.getXP() +*/ "\nLunar Acquis : "
-                        + Jeu.GetLunarPartie() + "\nLunar Total : " + Lunar.getLunar();
+        String text = "Game Over \nEnnemis tuer : " + Jeu.GetNbEnnemiMort() + "\nXP Acquis : " + Jeu.GetXpPartie() + "\nXP Total : " + Jeu.getLastXP() + "\nLunar Acquis : "
+                        + Jeu.GetLunarPartie() + "\nLunar Total : " + Jeu.getLastLunar();
         float x = 250;
         float y = 250;
 

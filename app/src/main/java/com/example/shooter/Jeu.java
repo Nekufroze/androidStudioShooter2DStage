@@ -8,6 +8,8 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.example.shooter.DataBase.Kraken2Database;
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
 import com.example.shooter.Objet.Ennemi;
@@ -45,11 +47,15 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     protected final SurfaceHolder surfaceHolder;
     private final GameOver gameOver;
     private final GameDisplay gameDisplay;
+    public final Kraken2Database DBKraken2D;
+    public static int LunarTot;
+    public static int XPTot;
 
     public Jeu(Context context){
         super(context);
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
+        DBKraken2D = new Kraken2Database(context);
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(context);
         joystick = new Joystick(350, 1800, 120, 40);
@@ -60,6 +66,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, joueur);
         setFocusable(true);
+        LunarTot = DBKraken2D.getLastLunar();
+        XPTot = DBKraken2D.getLastXp();
             }
     public static double GetNbennemi_Minute() {
         if (NbEnnemiMort % 20 == 0 && NbEnnemiMort != 0){
@@ -155,14 +163,27 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             lunar.draw(canvas, gameDisplay);
         }
     }
-
+    public static int getLastLunar(){
+        return LunarTot;
+    }
+    public static int getLastXP(){
+        return XPTot;
+    }
+    public void saveLunar(){
+        int Lunar = DBKraken2D.getLastLunar() + NbLunarP;
+        DBKraken2D.saveLunar(Lunar);
+    }
+    public void saveXP(){
+        int XP = DBKraken2D.getLastXp() + NbXP;
+        DBKraken2D.saveXp(XP);
+    }
     public void update(){
         joystick.update();
         joueur.update();
         // Stop d'update le jeu lorsque le joueur est mort.
         if(joueur.GetPVRestant() <= 0){
-        Lunar.setLunar(GetLunarPartie());
-        XP.setXP(GetXpPartie());
+            saveLunar();
+            saveXP();
             return;
         }
         // Spawn un ennemi lorsqu'il doit spawn
