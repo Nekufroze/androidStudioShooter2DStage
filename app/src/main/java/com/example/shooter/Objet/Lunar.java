@@ -1,13 +1,12 @@
 package com.example.shooter.Objet;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.shooter.DataBase.Kraken2Database;
 import com.example.shooter.R;
 
 public class Lunar extends Circle{
+    int lunar;
     public Lunar(Context context, Ennemi ennemi){
         super(ContextCompat.getColor(context, R.color.Lunar),
                 ennemi.getPositionX()+ ((int) (Math.random() * (80 - 5 )) + 5),
@@ -17,6 +16,11 @@ public class Lunar extends Circle{
     }
     @Override
     public void update() {
-
+    }
+    public void setLunar(int lunar){
+    this.lunar = lunar;
+    }
+    public static int getLunar(){
+        return 0; //lunar;
     }
 }
