@@ -4,13 +4,12 @@ import androidx.annotation.NonNull;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.shooter.Data.Kraken2DStorage;
-import com.example.shooter.Data.SaveLoad;
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
 import com.example.shooter.Objet.Ennemi;
@@ -57,8 +56,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
     public Jeu(Context context){
         super(context);
-        SaveLoad.LoadXP();
-        SaveLoad.LoadLunar();
+
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
@@ -106,6 +104,35 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             return true;
         }
         return super.onTouchEvent(event);
+
+    // On TouchEvent pour le bouton Home quand GameOver apparaît
+        if(GameOver.GetGameOver() == true){
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (isInside(event.getX(), event.getY())) {
+                        isPressed = true;
+                        invalidate();
+                        return true;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (isPressed) {
+                        // Perform the desired action
+                        Toast.makeText(getContext(), "Button pressed", Toast.LENGTH_SHORT).show();
+                        isPressed = false;
+                        invalidate();
+                        return true;
+                    }
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    isPressed = false;
+                    invalidate();
+                    break;
+            }
+            return super.onTouchEvent(event);
+        }
+
+        }
     }
 
     @Override
@@ -131,25 +158,28 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);
-
-        joueur.draw(canvas, gameDisplay);
-        joystick.draw(canvas);
-        // Fin du jeu si le joueur meurt
-        if(joueur.GetPVRestant() <=0){
-            gameOver.draw(canvas);
-        }
-        for (Ennemi ennemi : ListeEnnemi) {
+        // Clear the canvas
+        // Draw new content if the player is still alive
+        if (joueur.GetPVRestant() > 0) {
+            super.draw(canvas);
+            joueur.draw(canvas, gameDisplay);
+            joystick.draw(canvas);
+            for (Ennemi ennemi : ListeEnnemi) {
                 ennemi.draw(canvas, gameDisplay);
             }
-        for (Balle balle : ListeBalle) {
-            balle.draw(canvas, gameDisplay);
-        }
-        for (XP xp : ListeXP){
-            xp.draw(canvas, gameDisplay);
-        }
-        for (Lunar lunar : ListeLunar){
-            lunar.draw(canvas, gameDisplay);
+            for (Balle balle : ListeBalle) {
+                balle.draw(canvas, gameDisplay);
+            }
+            for (XP xp : ListeXP){
+                xp.draw(canvas, gameDisplay);
+            }
+            for (Lunar lunar : ListeLunar){
+                lunar.draw(canvas, gameDisplay);
+            }
+        } else {
+            // Draw gameOver screen
+            canvas.drawColor(Color.BLACK);
+            gameOver.draw(canvas);
         }
     }
     public static double GetNbennemi_Minute() {
@@ -161,16 +191,12 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public static int GetXpPartie(){
         return NbXP;
     }
+    public static int GetXPTot(){return XP.getXP() + GetXpPartie();}
     public static int GetLunarPartie(){
         return NbLunarP;
     }
+    public static int GetLunarTot(){ return  Lunar.getLunar() + GetLunarPartie();}
     public static int GetNbEnnemiMort(){ return NbEnnemiMort;}
-    public static int getLunarTOT(){
-        return Lunar.getLunar();
-    }
-    public static int getXPTot(){
-        return XP.getXP();
-    }
 
 
     public void update(){
@@ -178,9 +204,15 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         joueur.update();
         // Stop d'update le jeu lorsque le joueur est mort.
         if(joueur.GetPVRestant() <= 0){
-            XP.setLastXP(GetXpPartie());
-            SaveLoad.saveXP();
-            return;
+            try {
+                XP.setXP(GetXpPartie());
+                Lunar.setLunar(GetLunarPartie());
+                gameLoop.stopLoop();
+                wait(100);
+                return;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         // Spawn un ennemi lorsqu'il doit spawn
     if(Ennemi.readyToSpawn()){

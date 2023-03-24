@@ -5,8 +5,8 @@ import com.example.shooter.Objet.GameObject;
 public class GameDisplay {
     private double gameToDisplayCoordinateOffsetX;
     private double gameToDisplayCoordinateOffsetY;
-    private final double displayCenterX;
-    private final double displayCenterY;
+    private static double displayCenterX = 0;
+    private static double displayCenterY = 0;
     private final GameObject centerObject;
 
 
@@ -28,6 +28,12 @@ public class GameDisplay {
 
     public double gameToDisplayCoordinatesY(double positionY ) {
         return positionY + gameToDisplayCoordinateOffsetY;
+    }
 
+    public static double getDisplayX(){
+       return displayCenterX*2;
+    }
+    public static double getDisplayY(){
+        return displayCenterY*2;
     }
 }
