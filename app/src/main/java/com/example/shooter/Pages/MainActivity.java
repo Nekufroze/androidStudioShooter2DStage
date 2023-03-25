@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.shooter.Jeu;
+import com.example.shooter.Objet.Balle;
 import com.example.shooter.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause() {
-        Jeu.pause();
         super.onPause();
     }
 }

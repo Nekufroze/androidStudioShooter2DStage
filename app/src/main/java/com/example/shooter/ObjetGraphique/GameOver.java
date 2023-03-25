@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -21,7 +22,7 @@ public class GameOver {
     private final int rectTop = (int) (GameDisplay.getDisplayY()*0.75);
     private final int rectRight = (int) (GameDisplay.getDisplayX()*8/10);
     private final int rectBottom = (int) (GameDisplay.getDisplayY()*0.85);
-    private boolean isPressed = false;
+    public boolean isPressed = false;
     private static boolean GameOver = false;
 
 
@@ -55,9 +56,8 @@ public class GameOver {
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(80);
         // Dessine le rectangle
-        RectF rectF = new RectF(rectLeft, rectTop, rectRight, rectBottom);
-        int cornerRadius = 20;
-        canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, rectPaint);
+        Rect rect = new Rect(rectLeft, rectTop, rectRight, rectBottom);
+        canvas.drawRect(rect, rectPaint);
         // Dessine le texte au milieu du rectangle
         float textWidth = textPaint.measureText(home);
         float x2 = rectLeft + (rectRight - rectLeft - textWidth) / 2;
@@ -65,13 +65,20 @@ public class GameOver {
         canvas.drawText(home, x2, y2, textPaint);
     }
 
-    private boolean isInside(float x, float y) {
+    public boolean isInside(float x, float y) {
         return x > rectLeft && x < rectRight && y > rectTop && y < rectBottom;
     }
-    private void SetGameOver(){
+    public void SetGameOver(){
         GameOver = true;
     }
-    public static boolean GetGameOver(){
+    public boolean GetGameOver(){
         return GameOver;
     }
+    public void setIsPressed() {
+        isPressed = true;
+    }
+    public boolean getIsPressed() {
+        return isPressed;
+    }
+
 }

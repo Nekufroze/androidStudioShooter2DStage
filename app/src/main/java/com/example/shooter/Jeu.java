@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.example.shooter.Objet.Balle;
 import com.example.shooter.Objet.Circle;
@@ -64,6 +65,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         joystick = new Joystick(350, 1800, 120, 40);
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
+
         // initialize La vue du jeu et ce centre sur le joueur
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -103,36 +105,32 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             }
             return true;
         }
-        return super.onTouchEvent(event);
-
     // On TouchEvent pour le bouton Home quand GameOver apparaît
-        if(GameOver.GetGameOver() == true){
+        if(gameOver.GetGameOver()){
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    if (isInside(event.getX(), event.getY())) {
-                        isPressed = true;
+                    if (gameOver.isInside(event.getX(), event.getY())) {
+                        gameOver.setIsPressed();
                         invalidate();
                         return true;
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    if (isPressed) {
+                    if (gameOver.getIsPressed()){
                         // Perform the desired action
                         Toast.makeText(getContext(), "Button pressed", Toast.LENGTH_SHORT).show();
-                        isPressed = false;
+                        gameOver.isPressed = false;
                         invalidate();
                         return true;
                     }
                     break;
                 case MotionEvent.ACTION_CANCEL:
-                    isPressed = false;
+                    gameOver.isPressed = false;
                     invalidate();
                     break;
             }
-            return super.onTouchEvent(event);
         }
-
-        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -147,6 +145,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             SurfaceHolder surfaceholder = getHolder();
             surfaceholder.addCallback(this);
             gameLoop = new GameLoop(this, surfaceHolder);
+            Balle.setPuissanceBalle(Balle.getPuissanceBalle());
         }
         gameLoop.startLoop();
     }
@@ -209,6 +208,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 Lunar.setLunar(GetLunarPartie());
                 gameLoop.stopLoop();
                 wait(100);
+                gameOver.SetGameOver();
                 return;
             }catch (Exception e){
                 e.printStackTrace();
@@ -240,9 +240,9 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
             }
             Iterator<Balle> iteratorBalle = ListeBalle.iterator();
             while (iteratorBalle.hasNext()){
-                Circle balle = iteratorBalle.next();
+                 Circle balle = iteratorBalle.next();
                 if (Circle.isColliding(balle, ennemi)){
-                    if(ennemi.GetPVRestant() == 1){
+                    if(ennemi.GetPVRestant() <= Balle.getPuissanceBalle()){
                         ListeXP.add(new XP(getContext(), ennemi));
                         for (int i = 0; i < randomLunar; i++) {
                             ListeLunar.add(new Lunar(getContext(), ennemi));
@@ -256,7 +256,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                         break;
                     }
                     else{
-                        ennemi.setPVRestant(ennemi.GetPVRestant()-1);
+                        ennemi.setPVRestant(ennemi.GetPVRestant()- Balle.getPuissanceBalle());
                         iteratorBalle.remove();
                     }
 

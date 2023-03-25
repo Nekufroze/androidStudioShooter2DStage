@@ -30,7 +30,12 @@ public class Lunar extends Circle{
         }
     }
     public static int getLunar() {
-        return sharedPreferences.getInt("Lunar", 0);
+        try {
+            return sharedPreferences.getInt("Lunar", 0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
     @Override
     public void update() {
