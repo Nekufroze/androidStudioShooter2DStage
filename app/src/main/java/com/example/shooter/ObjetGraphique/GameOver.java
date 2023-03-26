@@ -56,17 +56,27 @@ public class GameOver {
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(80);
         // Dessine le rectangle
-        Rect rect = new Rect(rectLeft, rectTop, rectRight, rectBottom);
-        canvas.drawRect(rect, rectPaint);
+        int cornerRadius = 20;
+        final int rectLeft2 = (int) (GameDisplay.getDisplayX()*2/10);
+        final int rectTop2 = (int) (GameDisplay.getDisplayY()*0.75);
+        final int rectRight2 = (int) (GameDisplay.getDisplayX()*8/10);
+        final int rectBottom2 = (int) (GameDisplay.getDisplayY()*0.85);
+        RectF rectF = new RectF(rectLeft2, rectTop2, rectRight2, rectBottom2);
+        canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, rectPaint);
+
         // Dessine le texte au milieu du rectangle
         float textWidth = textPaint.measureText(home);
-        float x2 = rectLeft + (rectRight - rectLeft - textWidth) / 2;
-        float y2 = rectTop + (rectBottom - rectTop + textPaint.getTextSize()) / 2;
+        float x2 = rectLeft2 + (rectRight2 - rectLeft2 - textWidth) / 2;
+        float y2 = rectTop2 + (rectBottom2 - rectTop2 + textPaint.getTextSize()) / 2;
         canvas.drawText(home, x2, y2, textPaint);
     }
 
     public boolean isInside(float x, float y) {
-        return x > rectLeft && x < rectRight && y > rectTop && y < rectBottom;
+        final int rectLeft2 = (int) (GameDisplay.getDisplayX()*2/10);
+        final int rectTop2 = (int) (GameDisplay.getDisplayY()*0.75);
+        final int rectRight2 = (int) (GameDisplay.getDisplayX()*8/10);
+        final int rectBottom2 = (int) (GameDisplay.getDisplayY()*0.85);
+        return x > rectLeft2 && x < rectRight2 && y > rectTop2 && y < rectBottom2;
     }
     public void SetGameOver(){
         GameOver = true;

@@ -58,7 +58,6 @@ public class GameDatas {
             int lunar = LunarJ + lunarPartie;
             editor.putInt("Lunar", lunar);
             editor.apply();
-            System.out.println(lunar + " SetLunar");
         } catch (Exception e) {
             e.printStackTrace();
         }
