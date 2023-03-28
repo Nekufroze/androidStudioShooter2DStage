@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -58,11 +59,13 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public Jeu(Context context){
         super(context);
 
+
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(context);
-        joystick = new Joystick(350, 1800, 120, 40);
+        joystick = new Joystick((int) (GameDisplay.getDisplayX()/2), (int) GameDisplay.getDisplayY()/2, 120, 40);
+        System.out.println((int) GameDisplay.getDisplayX()+"  "+ (int) GameDisplay.getDisplayY());
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
 
@@ -184,6 +187,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
     public static double GetNbennemi_Minute() {
         if (NbEnnemiMort % 20 == 0 && NbEnnemiMort != 0){
             Nbennemi_Minute = Nbennemi_Minute *1.25;
+            Ennemi.setPvEnnemi(Ennemi.getPvEnnemi() + 1);
         }
         return Nbennemi_Minute;
     }
@@ -259,7 +263,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                         ennemi.setPVRestant(ennemi.GetPVRestant()- Balle.getPuissanceBalle());
                         iteratorBalle.remove();
                     }
-
                 }
             }
         }

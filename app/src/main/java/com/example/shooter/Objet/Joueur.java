@@ -20,7 +20,7 @@ Cette class est un héritage de la class Circle qui est une class hériter de Ga
 public class Joueur extends Circle {
     public static final double SPEED_PIXELS_PER_SECOND = 400.0;
     public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
-    public static final int MAX_PV = 2;
+    public static final int MAX_PV = 10;
     private int PointsDeVie = MAX_PV;
     private final Sprite sprite;
     private final Joystick joystick;

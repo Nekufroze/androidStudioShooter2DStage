@@ -24,7 +24,7 @@ public class Ennemi extends Circle {
     private static final double SPAWNS_PER_SECOND = SPAWNS_PER_MINUTE / 60;
     private static final double UPDATES_PER_SPAWN = GameLoop.MAX_UPS/SPAWNS_PER_SECOND;
     private static double updatesUntilNextSpawn = UPDATES_PER_SPAWN;
-    public static final int MAX_PV = 2;
+    public static int MAX_PV = 2;
     private int PointsDeVie = MAX_PV;
     private final Joueur joueur;
     private final BarrePVEnnemi barrePVEnnemi;
@@ -54,6 +54,15 @@ public class Ennemi extends Circle {
             return false;
         }
     }
+
+    public static int getPvEnnemi() {
+        return MAX_PV;
+    }
+    public static void setPvEnnemi(int pvEnnemi) {
+        MAX_PV = pvEnnemi;
+        System.out.print("PV ENNEMI = " + MAX_PV);
+    }
+
 
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
