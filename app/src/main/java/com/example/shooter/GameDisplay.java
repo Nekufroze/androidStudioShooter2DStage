@@ -37,7 +37,7 @@ public class GameDisplay {
     public static double getDisplayX(Context context){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.widthPixels/2;
+        return displayMetrics.widthPixels;
     }
     public static double getDisplayY(Context context){
         DisplayMetrics displayMetrics = new DisplayMetrics();

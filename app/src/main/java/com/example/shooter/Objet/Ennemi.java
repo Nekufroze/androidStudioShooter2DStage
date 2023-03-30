@@ -33,8 +33,8 @@ public class Ennemi extends Circle {
     public Ennemi(Context context, Joueur joueur) {
         super(
                 ContextCompat.getColor(context, R.color.ennemi),
-                (Math.random()*1000)+500,
-                (Math.random()*1000)+500,
+                (Math.random()*1000)+1000,
+                (Math.random()*1000)+1000,
                 30
         );
             this.barrePVEnnemi = new BarrePVEnnemi(context, this);

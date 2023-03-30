@@ -61,7 +61,7 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(context);
-        joystick = new Joystick((int) (GameDisplay.getDisplayX(getContext()))*(2/10), (int) GameDisplay.getDisplayY(getContext())/2, 120, 40);
+        joystick = new Joystick((int) (GameDisplay.getDisplayX(getContext()))/3, (int) ((int) GameDisplay.getDisplayY(getContext())*0.75), 120, 40);
         System.out.println((int) GameDisplay.getDisplayX(getContext())+"  "+ (int) GameDisplay.getDisplayY(getContext()));
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
