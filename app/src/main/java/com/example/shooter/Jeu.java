@@ -31,7 +31,6 @@ import java.util.List;
 public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
 
     private int joystickPointerid = 0;
-
     protected final SurfaceHolder surfaceHolder;
     private static GameLoop gameLoop;
     private final GameOver gameOver;
@@ -62,8 +61,8 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(context);
-        joystick = new Joystick((int) (GameDisplay.getDisplayX()*2), (int) GameDisplay.getDisplayY()*2, 120, 40);
-        System.out.println((int) GameDisplay.getDisplayX()+"  "+ (int) GameDisplay.getDisplayY());
+        joystick = new Joystick((int) (GameDisplay.getDisplayX(getContext()))*(2/10), (int) GameDisplay.getDisplayY(getContext())/2, 120, 40);
+        System.out.println((int) GameDisplay.getDisplayX(getContext())+"  "+ (int) GameDisplay.getDisplayY(getContext()));
         SpriteSheet spriteSheet = new SpriteSheet(context);
         joueur = new Joueur(getContext(),joystick, 500,1000,30, spriteSheet.getJoueurSprite());
 
@@ -105,31 +104,6 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
                 joystick.resetActuator();
             }
             return true;
-        }
-    // On TouchEvent pour le bouton Home quand GameOver apparaît
-        if(gameOver.GetGameOver()){
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    if (gameOver.isInside(event.getX(), event.getY())) {
-                        gameOver.setIsPressed();
-                        invalidate();
-                        return true;
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (gameOver.getIsPressed()){
-                        // Perform the desired action
-                        Toast.makeText(getContext(), "Button pressed", Toast.LENGTH_SHORT).show();
-                        gameOver.isPressed = false;
-                        invalidate();
-                        return true;
-                    }
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                    gameOver.isPressed = false;
-                    invalidate();
-                    break;
-            }
         }
         return super.onTouchEvent(event);
     }
@@ -179,7 +153,11 @@ public class Jeu extends SurfaceView implements SurfaceHolder.Callback {
         } else {
             // Draw gameOver screen
             canvas.drawColor(Color.BLACK);
-            gameOver.draw(canvas);
+            try {
+                gameOver.draw(canvas);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public static double GetNbennemi_Minute() {

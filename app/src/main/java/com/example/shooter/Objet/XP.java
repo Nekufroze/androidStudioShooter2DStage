@@ -33,7 +33,12 @@ public class XP extends Circle{
             }
     }
     public static int getXP() {
-        return sharedPreferences.getInt("XP", 0);
+        try {
+            return sharedPreferences.getInt("XP", 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
         @Override
     public void update() {
