@@ -35,6 +35,7 @@ public class GameOver {
         for (String line: text.split("\n")) {
             canvas.drawText(line, x, y, paint);
             y += paint.descent() - paint.ascent();
+            // Test
         }
 
     }
