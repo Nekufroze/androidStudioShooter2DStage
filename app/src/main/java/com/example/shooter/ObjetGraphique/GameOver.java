@@ -36,6 +36,7 @@ public class GameOver {
             canvas.drawText(line, x, y, paint);
             y += paint.descent() - paint.ascent();
         }
+
     }
     public void SetGameOver(){
         GameOver = true;
